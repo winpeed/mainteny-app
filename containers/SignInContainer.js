@@ -1,10 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import Sign from "../components/sign";
 
-function SignInContainer() {
+function SignInContainer({ csrfToken }) {
+  const [isError, setIsError] = useState(false);
+  const { data: session } = useSession();
+  console.log(session);
+
+  const { error } = useRouter().query;
+
+  const errors = {
+    Signin: "Try signing with a different account.",
+    Callback: "Try signing with a different account.",
+    CredentialsSignin:
+      "Sign in failed. Check the details you provided are correct.",
+    default: "Unable to sign in.",
+  };
+
+  const SignInError = ({ error }) => {
+    const errorMessage = error && (errors[error] ?? errors.default);
+    return <div>{errorMessage}</div>;
+  };
+
+  // function handleSubmit(event) {
+  //   event.preventDefault();
+
+  //   if (!session) {
+  //     setIsError(true);
+  //   } else if (session) {
+  //     setIsError(false);
+  //     router.push("/students");
+  //   }
+  // }
   return (
     <Sign>
       <Sign.Section>
@@ -23,16 +54,40 @@ function SignInContainer() {
 
         <Sign.Wrapper>
           <Sign.Heading>Welcome to Mainteny Uni Admin Portal.</Sign.Heading>
-          <Sign.Form>
-            <Sign.Label>Username</Sign.Label>
-            <Sign.Input type="text" placeholder="johndoe_91" required />
-            <Sign.Label>Password</Sign.Label>
+          {error && <SignInError error={error} style={{ color: "red" }} />}
+          <Sign.Form action="/api/auth/callback/credentials" method="POST">
+            <Sign.Input
+              name="csrfToken"
+              type="hidden"
+              defaultValue={csrfToken}
+              onFocus={() => {
+                setIsError(false);
+              }}
+            />
+            <Sign.Label htmlFor="input-username-for-credentials-provider">
+              Username
+            </Sign.Label>
+            <Sign.Input
+              type="text"
+              placeholder="Enter Username"
+              name="username"
+              id="input-username-for-credentials-provider"
+              onFocus={() => {
+                setIsError(false);
+              }}
+              required
+            />
+            <Sign.Label htmlFor="input-password-for-credentials-provider">
+              Password
+            </Sign.Label>
             <Sign.Input
               type="password"
               placeholder="Enter Your Password"
+              name="password"
+              id="input-password-for-credentials-provider"
               required
             />
-            <Sign.Button>Login</Sign.Button>
+            <Sign.Button type="submit">Login</Sign.Button>
             <Sign.Wrapper style={{ flexDirection: "row" }}>
               <Sign.Text>Not an admin yet?</Sign.Text>
 

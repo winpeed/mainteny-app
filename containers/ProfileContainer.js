@@ -12,6 +12,7 @@ import { cour } from "../courses";
 import SideContainer from "./SideContainer";
 import CourseForm from "../components/CourseForm";
 import { server } from "../config";
+import { getSession } from "next-auth/react";
 
 function ProfileContainer({ data }) {
   const [person, setPerson] = useState(data);
@@ -74,6 +75,12 @@ function ProfileContainer({ data }) {
   useEffect(() => {
     getAllStudentsData();
   }, [person]);
+
+  const { data: session } = getSession();
+
+  if (!session) {
+    return <div>Please sign in</div>;
+  }
 
   return (
     <>

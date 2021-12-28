@@ -1,27 +1,39 @@
 import NextAuth from "next-auth";
-import CredentialProvider from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export default NextAuth({
   providers: [
-    CredentialProvider({
-      username: { label: "Username", type: "text", placeholder: "admin" },
-      password: { label: "Password", type: "password" },
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, req) {
+        if (
+          credentials.username === "admin" &&
+          credentials.password === "testing1234"
+        ) {
+          return {
+            id: 1,
+            name: "admin",
+            password: "testing1234",
+          };
+        }
+        return null;
+      },
     }),
   ],
-  authorize: (credentials) => {
-    if (credentials.username === "admin" && credentials.password === "test") {
-      return {
-        id: 2,
-        name: "Praise",
-        email: "admin@testing.com",
-      };
-    }
-    return null;
-  },
   pages: {
     signIn: "/signin",
+    error: "/signin",
   },
   callbacks: {
+    redirect({ url, baseUrl }) {
+      if (url.startsWith(baseUrl)) return url;
+      else if (url.startsWith("/")) return new URL(url, baseUrl).toString();
+      return baseUrl;
+    },
     jwt: ({ token, user }) => {
       if (user) {
         token.id = user.id;
