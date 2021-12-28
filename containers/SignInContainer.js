@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,11 +7,11 @@ import { FaLongArrowAltLeft } from "react-icons/fa";
 import Sign from "../components/sign";
 
 function SignInContainer({ csrfToken }) {
-  const [isError, setIsError] = useState(false);
   const { data: session } = useSession();
-  console.log(session);
+  const [isError, setIsError] = useState(false);
 
-  const { error } = useRouter().query;
+  const router = useRouter();
+  const { error } = router.query;
 
   const errors = {
     Signin: "Try signing with a different account.",
@@ -23,19 +23,26 @@ function SignInContainer({ csrfToken }) {
 
   const SignInError = ({ error }) => {
     const errorMessage = error && (errors[error] ?? errors.default);
-    return <div>{errorMessage}</div>;
+    return (
+      <Sign.Text
+        style={{
+          color: "red",
+          letterSpacing: "0.02em",
+          padding: "0.6em 0em",
+          fontStyle: "italic",
+        }}
+      >
+        {errorMessage}
+      </Sign.Text>
+    );
   };
 
-  // function handleSubmit(event) {
-  //   event.preventDefault();
+  useEffect(() => {
+    if (session) {
+      router.push("/students");
+    }
+  }, [session]);
 
-  //   if (!session) {
-  //     setIsError(true);
-  //   } else if (session) {
-  //     setIsError(false);
-  //     router.push("/students");
-  //   }
-  // }
   return (
     <Sign>
       <Sign.Section>
@@ -54,7 +61,7 @@ function SignInContainer({ csrfToken }) {
 
         <Sign.Wrapper>
           <Sign.Heading>Welcome to Mainteny Uni Admin Portal.</Sign.Heading>
-          {error && <SignInError error={error} style={{ color: "red" }} />}
+          {error && <SignInError error={error} />}
           <Sign.Form action="/api/auth/callback/credentials" method="POST">
             <Sign.Input
               name="csrfToken"

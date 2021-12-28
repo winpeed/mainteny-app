@@ -5,7 +5,7 @@ import { getSession } from "next-auth/react";
 export default async function handler(req, res) {
   const session = await getSession({ req });
 
-  if (session) {
+  if (!session) {
     res.status(401).json({ message: "User is not Authenticated" });
   } else {
     if (req.method == "GET") {

@@ -128,7 +128,7 @@ export const Input = styled.input`
   color: var(--color-gray);
   background: var(--text-light);
   font-weight: 600;
-  opacity: 0.5;
+  opacity: 0.8;
   letter-spacing: -0.05em;
 
   &:focus {

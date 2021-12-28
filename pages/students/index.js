@@ -1,17 +1,12 @@
 import React from "react";
 import HeaderContainer from "../../containers/HeaderContainer";
 import StudentContainer from "../../containers/StudentContainer";
-import { server } from "../../config";
-import {
-  getProviders,
-  getSession,
-  getCsrfToken,
-  useSession,
-} from "next-auth/react";
+import { getProviders, getSession, getCsrfToken } from "next-auth/react";
 import HomeContainer from "../../containers/HomeContainer";
 import { getStudents } from "../api/students";
 
 export default function students({ data, session }) {
+  console.log(session);
   return (
     <>
       <HeaderContainer />

@@ -5,7 +5,7 @@ import { getSession } from "next-auth/react";
 export default async function handler(req, res) {
   const session = await getSession({ req });
 
-  if (session) {
+  if (!session) {
     res.status(401).json({ message: "User is not Authenticated" });
   } else {
     if (req.method == "GET") {
@@ -26,6 +26,9 @@ export default async function handler(req, res) {
 
     if (req.method == "PUT") {
       const { courses } = req.body;
+      const { db } = await connectToDatabase();
+      const studentsCollection = await db.collection("students");
+
       try {
         const result = await studentsCollection.findOneAndUpdate(
           { _id: new ObjectID(req.query.id) },
@@ -48,6 +51,9 @@ export default async function handler(req, res) {
     }
 
     if (req.method == "DELETE") {
+      const { db } = await connectToDatabase();
+      const studentsCollection = await db.collection("students");
+
       try {
         const result = await studentsCollection.deleteOne({
           _id: new ObjectID(req.query.id),
@@ -72,9 +78,7 @@ export default async function handler(req, res) {
 export async function getOneStudent(id) {
   const { db } = await connectToDatabase();
   const studentsCollection = await db.collection("students");
-
   const result = await studentsCollection.find({}).toArray();
-
   const data = result.find((student) => {
     const { _id } = student;
     return String(_id) == id;

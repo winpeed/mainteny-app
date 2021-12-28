@@ -11,20 +11,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { cour } from "../courses";
 import SideContainer from "./SideContainer";
 import CourseForm from "../components/CourseForm";
-import { server } from "../config";
-import { getSession } from "next-auth/react";
 
-function ProfileContainer({ data }) {
+function ProfileContainer({ data, allStudents }) {
   const [person, setPerson] = useState(data);
   const [allcourses, setAllCourses] = useState([...cour]);
-  const [searchItem, setSearchItem] = useState("");
   const [takenCourses, setTakenCourses] = useState(data.courses);
-  const [allStudents, setAllStudents] = useState([]);
 
   const [open, setOpen] = useState(false);
   const [notice, setNotice] = useState(false);
-
-  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const router = useRouter();
 
@@ -50,14 +44,6 @@ function ProfileContainer({ data }) {
 
   const { name, age, email, country, gender } = person;
 
-  async function getAllStudentsData() {
-    const response = await fetch(`${server}/api/students`);
-    const results = await response.json();
-
-    const { data } = results;
-    setAllStudents(data);
-  }
-
   async function deleteContact() {
     const id = String(person._id);
 
@@ -70,16 +56,6 @@ function ProfileContainer({ data }) {
     } catch (err) {
       return err;
     }
-  }
-
-  useEffect(() => {
-    getAllStudentsData();
-  }, [person]);
-
-  const { data: session } = getSession();
-
-  if (!session) {
-    return <div>Please sign in</div>;
   }
 
   return (
