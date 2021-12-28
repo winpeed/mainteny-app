@@ -1,0 +1,42 @@
+[
+  {
+    "id": "MNU001",
+    "name": "Arigbada Kelly Ujah",
+    "age": 24,
+    "email": "kelly@gmail.com",
+    "nationality": "Nigerian",
+    "img": "user.svg",
+    "gender": "Male",
+    "courses": ["Algebra 1", "Calculus"]
+  },
+  {
+    "id": "MNU002",
+    "name": "Praise Obende",
+    "age": 28,
+    "email": "praise@gmail.com",
+    "nationality": "Nigerian",
+    "img": "user.svg",
+    "gender": "Female",
+    "courses": ["Pre-algebra", "Pre-calculus"]
+  },
+  {
+    "id": "MNU003",
+    "name": "Faithful Ujah",
+    "age": 22,
+    "email": "faithful@gmail.com",
+    "nationality": "Brazilian",
+    "img": "user.svg",
+    "gender": "Male",
+    "courses": ["Probability", "Geometry"]
+  },
+  {
+    "id": "MNU004",
+    "name": "Bright Ujah",
+    "age": 26,
+    "email": "bright@gmail.com",
+    "nationality": "USA",
+    "img": "user.svg",
+    "gender": "Male",
+    "courses": ["Computer Math", "Trigonometry"]
+  }
+]

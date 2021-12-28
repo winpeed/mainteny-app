@@ -1,0 +1,17 @@
+export const cour = [
+  "Algebra 1",
+  "Algebra 2",
+  "Calculus",
+  "Consumer Math",
+  "Geometry",
+  "Integrated Math",
+  "Computer Math",
+  "Math applications",
+  "Practical Math",
+  "Pre-algebra",
+  "Pre-calculus",
+  "Probability",
+  "Quantitative literacy",
+  "Statistics",
+  "Trigonometry",
+];
