@@ -4,7 +4,7 @@ import DataTable from "react-data-table-component";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import SideContainer from "./SideContainer";
-import Formiking from "../components/Formiking";
+import StudentForm from "../components/StudentForm";
 import Router from "next/router";
 
 function StudentContainer({ data }) {
@@ -66,7 +66,7 @@ function StudentContainer({ data }) {
         aria-labelledby="Add New Students"
         aria-describedby="A Form to Add new students to existing courses"
       >
-        <Formiking
+        <StudentForm
           data={data}
           onShow={() => setIsShowing(!isShowing)}
           isShowing={isShowing}

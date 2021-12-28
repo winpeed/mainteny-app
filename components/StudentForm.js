@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { server } from "../config";
 
-export default function Formiking({ data, onShow, isShowing, onClose }) {
+export default function StudentForm({ data, onShow, isShowing, onClose }) {
   const [allCourses, setAllCourses] = useState([...cour]);
 
   const [newItem, setNewItem] = useState({});
