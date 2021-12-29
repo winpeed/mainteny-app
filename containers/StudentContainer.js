@@ -83,7 +83,6 @@ function StudentContainer({ data }) {
             getStudents();
             setOpen(false);
           }}
-          onRefresh={() => getStudents()}
           open={open}
         />
       </Modal>

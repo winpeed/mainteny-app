@@ -6,13 +6,7 @@ import Router from "next/router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function StudentForm({
-  data,
-  onShow,
-  isShowing,
-  onClose,
-  onRefresh,
-}) {
+export default function StudentForm({ data, onShow, isShowing, onClose }) {
   const [allCourses, setAllCourses] = useState([...cour]);
 
   const notify = () =>
@@ -45,7 +39,6 @@ export default function StudentForm({
         .then((data) => {
           onClose();
           notify();
-          onRefresh();
         });
     },
   });
