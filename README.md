@@ -13,31 +13,37 @@ With the application, only administrators can make changes to the student data a
 
 ### Installation
 
-In the project directory, you can run:
+1. Clone this repo
+   ```sh
+   git clone https://github.com/winpeed/mainteny-uni.git
+   ```
+2. Install all NPM packages
+   ```sh
+   npm install
+   ```
+3. For the application to work in your local environment, the following environment variables have to be created in your .env.local file.
+ Create a `.env.local` file in the root of your project and insert
+your key/value pairs in the following format of `KEY=VALUE`:
+   
+```js
+MONGODB_URL="YOUR MONGO DATABASE URL"
+MONGODB_DB="YOUR MONGODB DATABASE NAME"
+NEXTAUTH_URL=http://localhost:3000
+```
+If you experience any issues with the MONGODB_URL and MONGODB_BY, you can shoot me an [email.](mailto:praiseobende@yahoo.com?subject=Hi% "Hi!")
 
-```sh
+4. In the project directory, you can run:
+
+```js
 "npm run dev"
 ```
 
 to start the development server on http://localhost:3000.
+ Open [http://localhost:3000](http://localhost:3000) to view it in the browser. The page will reload if you make edits. You will also see any lint errors in the console.
 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser. The page will reload if you make edits. You will also see any lint errors in the console.
-
-```sh
+5. Run
+```js
 "npm run build"
-```
-
-to build the application for production usage. It correctly bundles the Next app in production mode and optimizes the build for the best performance.
-
-For the application to work in your local environment, the following environment variables have to be created in your .env.local file.
-
-Create a `.env.local` file in the root of your project and insert
-your key/value pairs in the following format of `KEY=VALUE`:
-
-```sh
-MONGODB_URL=mongodb+srv://m001-student:mainteny01@cluster0.teqdf.mongodb.net/mainteny-uni?retryWrites=true&w=majority
-MONGODB_DB=mainteny-uni
-NEXTAUTH_URL=http://localhost:3000
 ```
 
 ### Usage
