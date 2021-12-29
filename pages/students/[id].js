@@ -19,7 +19,7 @@ export async function getStaticProps(context) {
     _id: String(response._id),
     courses: response.courses,
     age: response.age,
-    gender: response.age,
+    gender: response.gender,
     name: response.name,
     email: response.email,
     country: response.country,
