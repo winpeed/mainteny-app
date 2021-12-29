@@ -81,8 +81,9 @@ function ProfileContainer({ data }) {
         open={open}
         onClose={onCloseModal}
         center
-        classNames={{
+        className={{
           overlay: "customOverlay",
+          modal: "customModal",
         }}
         aria-labelledby="Add New Courses"
         aria-describedby="A Form to Add new courses to existing courses"

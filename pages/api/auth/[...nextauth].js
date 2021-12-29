@@ -11,13 +11,13 @@ export default NextAuth({
       },
       async authorize(credentials, req) {
         if (
-          credentials.username === "admin" &&
-          credentials.password === "testing1234"
+          credentials.username === process.env.USERNAME &&
+          credentials.password === process.env.PASSWORD
         ) {
           return {
             id: 1,
-            name: "admin",
-            password: "testing1234",
+            name: process.env.USERNAME,
+            password: process.env.PASSWORD,
           };
         }
         return null;

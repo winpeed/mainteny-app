@@ -40,8 +40,9 @@ table {
 }
 
 .customOverlay {
-  background: rgba(36, 123, 160, 0.7);
+  background: rgba(3 63 72, 0.7);
 }
 .customModal {
   width: 100%;
+  margin: 1rem 0rem;
 }
