@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
-import Router, { useRouter } from "next/router";
 import { CheckboxGroup, Checkbox } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Form from "./form";
 import { cour } from "../courses";
-import { server } from "../config";
 
-function CourseForm({ takenCourses, person, onClose }) {
+function CourseForm({ takenCourses, person, onClose, onCourses }) {
   const { handleSubmit, register } = useForm();
-
+  const [studentCourses, setStudentCourses] = useState([...takenCourses]);
   const [allCourses, setAllCourses] = useState([...cour]);
-  const [isShowing, setIsShowing] = useState(true);
-
-  const router = useRouter();
 
   const notify = () =>
     toast.success(`Courses updated!`, {
@@ -31,14 +26,14 @@ function CourseForm({ takenCourses, person, onClose }) {
     const id = String(person._id);
 
     try {
-      const response = await fetch(`${server}/api/students/${id}`, {
+      const response = await fetch(`/api/v1/students/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ courses: [...value.courses] }),
       });
       notify();
       onClose();
-      router.reload(window.location.pathname);
+      onCourses();
     } catch (err) {
       return err;
     }
@@ -48,7 +43,7 @@ function CourseForm({ takenCourses, person, onClose }) {
     updateContact(values);
   }
 
-  useEffect(() => {}, [takenCourses, person]);
+  useEffect(() => {}, [studentCourses]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -58,7 +53,7 @@ function CourseForm({ takenCourses, person, onClose }) {
       <Form.Wrapper>
         <CheckboxGroup
           colorScheme="blue"
-          defaultValue={[...takenCourses]}
+          defaultValue={[...studentCourses]}
           aria-labelledby="checkbox-group"
         >
           {allCourses.map((course, index) => {

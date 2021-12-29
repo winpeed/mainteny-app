@@ -22,14 +22,24 @@ export const NavContent = styled.div`
 `;
 
 export const NavItem = styled.a`
-  font-size: ${(props) => (props.type == "logo" ? "1.8rem" : "1.4rem")};
+  font-size: ${(props) => (props.type == "logo" ? "1.3rem" : "1.2rem")};
   font-weight: 700;
   color: ${(props) =>
-    props.type == "logo" ? "var(--text-light)" : "var(--color-dark)"};
+    props.type == "logo" || props.sign == "in" || props.sign == "out"
+      ? "var(--text-light)"
+      : "var(--color-dark)"};
   letter-spacing: -0.03em;
   text-decoration: none;
-  padding: 0.6em 0em;
+  border-radius: 5px;
+  margin: 0.6em 0em;
+  padding: 0.4em 0.8em;
   transition: all 0.1s ease-in-out 0.2s;
+  background: ${(props) =>
+    props.sign == "out"
+      ? "var(--color-red)"
+      : props.sign == "in"
+      ? "var(--color-green)"
+      : null};
 
   @media (min-width: 850px) {
     color: var(--text-light);

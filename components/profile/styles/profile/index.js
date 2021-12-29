@@ -45,7 +45,6 @@ export const PageTitle = styled.h1`
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.015em;
-  text-align: left;
   margin: 0.7em 2em 0.3em 0em;
 
   @media (min-width: 510px) {
@@ -61,7 +60,7 @@ export const PageTitle = styled.h1`
 
 export const SubTitle = styled.h2`
   font-size: 1.6rem;
-  color: var(--text-dark);
+  color: var(--color-dark);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.015em;
@@ -76,8 +75,8 @@ export const Input = styled.input`
   color: var(--color-gray);
   background: var(--text-light);
   font-weight: 600;
-  opacity: 0.5;
-  letter-spacing: -0.05em;
+  opacity: 0.8;
+  letter-spacing: 0.02em;
 
   &:focus {
     background: var(--text-light);
@@ -89,7 +88,7 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  padding: 1.2em;
+  padding: 1em 1.3em;
   background: ${(props) =>
     props.state == "danger"
       ? "var(--color-red)"
@@ -101,7 +100,7 @@ export const Button = styled.button`
   border: none;
   cursor: pointer;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin-bottom: 0.9em;
   text-align: center;
   display: flex;

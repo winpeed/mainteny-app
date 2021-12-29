@@ -1,39 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import HeaderContainer from "../../containers/HeaderContainer";
 import ProfileContainer from "../../containers/ProfileContainer";
-import HomeContainer from "../../containers/HomeContainer";
-import { getOneStudent } from "../api/students/[id]";
-import { getStudents } from "../api/students";
-import { server } from "../../config";
-import { getSession } from "next-auth/react";
+import { getStudents } from "../api/v1/students";
+import { getOneStudent } from "../api/v1/students/[id]";
 
 export default function student({ data }) {
-  const session = getSession().then((data) => {
-    return data;
-  });
-
-  const [allStudents, setAllStudents] = useState([]);
-
-  async function getAllStudentsData() {
-    const response = await fetch(`${server}/api/students`);
-    const results = await response.json();
-    const { data } = results;
-
-    setAllStudents(data);
-  }
-
-  useEffect(() => {
-    getAllStudentsData();
-  }, []);
-
   return (
     <>
       <HeaderContainer />
-      {!session ? (
-        <HomeContainer />
-      ) : (
-        <ProfileContainer data={data} allStudents={allStudents} />
-      )}
+      <ProfileContainer data={data} />
     </>
   );
 }

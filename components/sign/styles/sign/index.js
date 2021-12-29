@@ -8,7 +8,7 @@ export const Container = styled.main`
 `;
 
 export const Section = styled.section`
-  padding: 1em;
+  padding: 3em 1em 1em 1em;
   background: ${(props) =>
     props.styled === "true" ? "var(--text-dark)" : "var(--text-light)"};
 
@@ -42,6 +42,7 @@ export const Wrapper = styled.div`
       ? "flex-start"
       : null};
   max-width: ${(props) => (props.width === "max" ? "350px" : null)};
+  padding: 1em 0em;
 
   @media (min-width: 510px) {
     max-width: ${(props) => (props.width === "max" ? "inherit" : null)};
@@ -87,9 +88,10 @@ export const Text = styled.p`
 export const SubHeading = styled.h2`
   font-size: 1.2rem;
   letter-spacing: -0.01em;
-  line-height: 1.4;
+  line-height: 1.6;
   color: ${(props) =>
     props.color == "light" ? "var(--color-light)" : "var(--color-dark)"};
+  font-weight: 600;
 
   @media (min-width: 510px) {
     font-size: 1.3rem;
@@ -129,7 +131,7 @@ export const Input = styled.input`
   background: var(--text-light);
   font-weight: 600;
   opacity: 0.8;
-  letter-spacing: -0.05em;
+  letter-spacing: 0.015em;
 
   &:focus {
     background: var(--text-light);
@@ -180,4 +182,7 @@ export const Link = styled.a`
   opacity: ${(props) => (props.mode === "url" ? "1.0" : "0.8")};
 `;
 
-export const ImageWrapper = styled.div``;
+export const ImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;

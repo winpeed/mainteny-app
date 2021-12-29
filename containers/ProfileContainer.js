@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
-import Profile from "../components/profile";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import SideContainer from "./SideContainer";
+import CourseForm from "../components/CourseForm";
+import Profile from "../components/profile";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { cour } from "../courses";
-import SideContainer from "./SideContainer";
-import CourseForm from "../components/CourseForm";
 
-function ProfileContainer({ data, allStudents }) {
+function ProfileContainer({ data }) {
   const [person, setPerson] = useState(data);
-  const [allcourses, setAllCourses] = useState([...cour]);
   const [takenCourses, setTakenCourses] = useState(data.courses);
+  const [allStudents, setAllStudents] = useState([]);
 
   const [open, setOpen] = useState(false);
   const [notice, setNotice] = useState(false);
@@ -48,7 +47,7 @@ function ProfileContainer({ data, allStudents }) {
     const id = String(person._id);
 
     try {
-      const response = await fetch(`${server}/api/students/${id}`, {
+      const response = await fetch(`/api/v1/students/${id}`, {
         method: "DELETE",
       });
       notify();
@@ -56,6 +55,24 @@ function ProfileContainer({ data, allStudents }) {
     } catch (err) {
       return err;
     }
+  }
+
+  useEffect(() => {
+    getCourses();
+    coursesUpdate();
+  }, [open]);
+
+  async function getCourses() {
+    const response = await fetch(`/api/v1/students/`);
+    const results = await response.json();
+    setAllStudents(results.data);
+  }
+
+  async function coursesUpdate() {
+    const id = String(person._id);
+    const response = await fetch(`/api/v1/students/${id}`);
+    const results = await response.json();
+    setTakenCourses(results.data.courses);
   }
 
   return (
@@ -74,6 +91,7 @@ function ProfileContainer({ data, allStudents }) {
           takenCourses={takenCourses}
           person={person}
           onClose={() => setOpen(false)}
+          onCourses={() => getCourses()}
         />
       </Modal>
       <Modal
@@ -112,7 +130,7 @@ function ProfileContainer({ data, allStudents }) {
               </Profile.Button>
             </Link>
             <Profile.Button onClick={onOpenModal} state="success">
-              Add Courses
+              Choose Courses
             </Profile.Button>
           </Profile.ImageWrapper>
           <Profile.Card>

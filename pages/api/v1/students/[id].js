@@ -1,4 +1,4 @@
-import { connectToDatabase } from "../../../utils/mongodb";
+import { connectToDatabase } from "../../../../utils/mongodb";
 const ObjectID = require("mongodb").ObjectId;
 import { getSession } from "next-auth/react";
 
@@ -26,10 +26,10 @@ export default async function handler(req, res) {
 
     if (req.method == "PUT") {
       const { courses } = req.body;
-      const { db } = await connectToDatabase();
-      const studentsCollection = await db.collection("students");
 
       try {
+        const { db } = await connectToDatabase();
+        const studentsCollection = await db.collection("students");
         const result = await studentsCollection.findOneAndUpdate(
           { _id: new ObjectID(req.query.id) },
           {

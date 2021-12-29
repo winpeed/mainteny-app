@@ -20,13 +20,13 @@ const HeaderContainer = () => {
           </Link>
           {!session ? (
             <Link href="/api/auth/signin" passHref>
-              <Header.NavItem onClick={() => signIn("credentials")}>
+              <Header.NavItem onClick={() => signIn("credentials")} sign="in">
                 Sign In
               </Header.NavItem>
             </Link>
           ) : (
             <Link href="/api/auth/signout" passHref>
-              <Header.NavItem onClick={() => signOut("credentials")}>
+              <Header.NavItem onClick={() => signOut("credentials")} sign="out">
                 Sign Out
               </Header.NavItem>
             </Link>

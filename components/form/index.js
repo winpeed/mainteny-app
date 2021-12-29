@@ -1,5 +1,12 @@
 import React from "react";
-import { Container, Text, Wrapper, Input, Label, Button } from "../form/styles";
+import {
+  Container,
+  Text,
+  Wrapper,
+  Input,
+  Label,
+  Button,
+} from "../form/styles/form";
 
 export default function Form({ children, ...restProps }) {
   return <Container {...restProps}>{children}</Container>;

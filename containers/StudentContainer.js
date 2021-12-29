@@ -5,7 +5,7 @@ import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import SideContainer from "./SideContainer";
 import StudentForm from "../components/StudentForm";
-import Router from "next/router";
+import { useRouter } from "next/router";
 
 function StudentContainer({ data }) {
   const [searchText, setSearchText] = useState("");
@@ -17,6 +17,15 @@ function StudentContainer({ data }) {
 
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+
+  const router = useRouter();
+
+  async function getStudents() {
+    const response = await fetch("/api/v1/students");
+    const res = await response.json();
+    const { data } = res;
+    setAllStudents(data);
+  }
 
   useEffect(() => {}, [allStudents]);
 
@@ -70,11 +79,13 @@ function StudentContainer({ data }) {
           data={data}
           onShow={() => setIsShowing(!isShowing)}
           isShowing={isShowing}
-          onClose={() => setOpen(false)}
+          onClose={() => {
+            getStudents();
+            setOpen(false);
+          }}
           open={open}
         />
       </Modal>
-
       <Profile type="content">
         <SideContainer allStudents={allStudents} />
         <Profile.Content>
@@ -109,7 +120,7 @@ function StudentContainer({ data }) {
             pointerOnHover={true}
             highlightOnHover={true}
             onRowClicked={(state) => {
-              Router.push(`/students/${state._id}`);
+              router.push(`/students/${state._id}`);
             }}
           />
         </Profile.Content>

@@ -15,7 +15,7 @@ import {
   Overall,
   Span,
   ContentWrap,
-} from "./styles";
+} from "../profile/styles/profile";
 
 export default function Profile({ children, ...restProps }) {
   return <Container {...restProps}>{children}</Container>;

@@ -5,14 +5,9 @@ import { cour } from "../courses";
 import Router from "next/router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { server } from "../config";
 
 export default function StudentForm({ data, onShow, isShowing, onClose }) {
   const [allCourses, setAllCourses] = useState([...cour]);
-
-  const [newItem, setNewItem] = useState({});
-
-  const [notice, setNotice] = useState(false);
 
   const notify = () =>
     toast.success("New Student successfully added to the database!", {
@@ -35,7 +30,7 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
       courses: [],
     },
     onSubmit: (values) => {
-      fetch(`${server}/api/students`, {
+      fetch(`/api/v1/students`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
@@ -44,7 +39,6 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
         .then((data) => {
           onClose();
           notify();
-          Router.push("/students");
         });
     },
   });

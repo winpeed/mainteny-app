@@ -13,7 +13,7 @@ import {
   Label,
   Link,
   ImageWrapper,
-} from "./styles";
+} from "../sign/styles/sign";
 
 export default function Sign({ children, ...restProps }) {
   return <Container {...restProps}>{children}</Container>;

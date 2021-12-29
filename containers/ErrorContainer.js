@@ -7,7 +7,9 @@ export default function ErrorContainer() {
   return (
     <Profile>
       <Profile.Wrapper type="home">
-        Oops, this page is currently not available.
+        <Profile.SubTitle>
+          Oops, this page is currently not available.
+        </Profile.SubTitle>
         <Profile.ImageWrapper>
           <Image
             src="/under_construction.svg"
@@ -16,8 +18,8 @@ export default function ErrorContainer() {
             width={500}
           />
         </Profile.ImageWrapper>
-        <Link href="/" passHref>
-          <Profile.Button>Go Home</Profile.Button>
+        <Link href="/signin" passHref>
+          <Profile.Button>Sign in as Admin</Profile.Button>
         </Link>
       </Profile.Wrapper>
     </Profile>

@@ -3,10 +3,9 @@ import HeaderContainer from "../../containers/HeaderContainer";
 import StudentContainer from "../../containers/StudentContainer";
 import { getProviders, getSession, getCsrfToken } from "next-auth/react";
 import HomeContainer from "../../containers/HomeContainer";
-import { getStudents } from "../api/students";
+import { getStudents } from "../api/v1/students";
 
 export default function students({ data, session }) {
-  console.log(session);
   return (
     <>
       <HeaderContainer />

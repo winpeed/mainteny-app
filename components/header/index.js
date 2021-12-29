@@ -5,7 +5,7 @@ import {
   NavList,
   NavItem,
   HamburgerSpan,
-} from "./styles/";
+} from "../header/styles/header";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaRegWindowClose } from "react-icons/fa";
 

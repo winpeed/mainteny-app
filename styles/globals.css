@@ -9,7 +9,7 @@ body {
   --color-dark: #033f48;
   --color-blue: #0000ff;
   --color-green: #008100;
-  --color-red: #f00e0e;
+  --color-red: #df2222;
   --light-gray: #cdcac0;
   --color-gray: #73726f;
   --color-mocassin: #fffaf0;
@@ -29,7 +29,7 @@ a {
 .logo {
   cursor: pointer;
   font-weight: 700;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   letter-spacing: -0.04em;
   text-decoration: none;
   color: var(--text-light);

@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import Sign from "../components/sign";
 
 function SignInContainer({ csrfToken }) {
-  const { data: session } = useSession();
   const [isError, setIsError] = useState(false);
 
   const router = useRouter();
@@ -27,7 +25,7 @@ function SignInContainer({ csrfToken }) {
       <Sign.Text
         style={{
           color: "red",
-          letterSpacing: "0.02em",
+          letterSpacing: "0.015em",
           padding: "0.6em 0em",
           fontStyle: "italic",
         }}
@@ -36,12 +34,6 @@ function SignInContainer({ csrfToken }) {
       </Sign.Text>
     );
   };
-
-  useEffect(() => {
-    if (session) {
-      router.push("/students");
-    }
-  }, [session]);
 
   return (
     <Sign>

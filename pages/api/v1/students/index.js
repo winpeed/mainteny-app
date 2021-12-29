@@ -1,5 +1,5 @@
-import { connectToDatabase } from "../../../utils/mongodb";
-import Student from "../../../models/studentModel";
+import { connectToDatabase } from "../../../../utils/mongodb";
+import Student from "../../../../models/studentModel";
 import { getSession } from "next-auth/react";
 
 export default async function handler(req, res) {
@@ -30,6 +30,8 @@ export default async function handler(req, res) {
 
     if (req.method == "POST") {
       const student = req.body;
+      const { db } = await connectToDatabase();
+      const studentsCollection = await db.collection("students");
 
       if (!student) {
         return res
