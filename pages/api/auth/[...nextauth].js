@@ -6,18 +6,18 @@ export default NextAuth({
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        username: { label: "Username", type: "text", placeholder: "admin" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
         if (
-          credentials.username === process.env.USERNAME &&
-          credentials.password === process.env.PASSWORD
+          credentials.username === "admin" &&
+          credentials.password === "testing1234"
         ) {
           return {
             id: 1,
-            name: process.env.USERNAME,
-            password: process.env.PASSWORD,
+            name: "admin",
+            password: "testing1234",
           };
         }
         return null;

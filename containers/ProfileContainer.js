@@ -131,7 +131,7 @@ function ProfileContainer({ data }) {
               </Profile.Button>
             </Link>
             <Profile.Button onClick={onOpenModal} state="success">
-              Choose Courses
+              Edit Courses
             </Profile.Button>
           </Profile.ImageWrapper>
           <Profile.Card>
