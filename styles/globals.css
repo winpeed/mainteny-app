@@ -39,10 +39,13 @@ table {
   border-collapse: collapse;
 }
 
-.customOverlay {
-  background: rgba(3 63 72, 0.7);
+.react-responsive-modal-modal {
+  padding: 1em !important;
 }
-.customModal {
-  width: 100%;
-  margin: 1rem 0rem;
+
+@media (max-width: 300px) {
+  .react-responsive-modal-modal,
+  .react-responsive-modal-modal {
+    max-width: 280px !important;
+  }
 }

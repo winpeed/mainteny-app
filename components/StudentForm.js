@@ -1,13 +1,28 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
+import React, { useState, useEffect } from "react";
+import { useFormik, formik } from "formik";
 import Form from "./form/index";
 import { cour } from "../courses";
-import Router from "next/router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function StudentForm({ data, onShow, isShowing, onClose }) {
   const [allCourses, setAllCourses] = useState([...cour]);
+  const [allCountries, setAllCountries] = useState([]);
+
+  async function getCountries() {
+    const response = await fetch(`https://restcountries.com/v3.1/all`);
+    const results = await response.json();
+    const data = results.map((datum) => datum.name.common);
+    setAllCountries(data.sort());
+  }
+
+  function handleChange(event) {
+    console.log(event.target.value);
+  }
+
+  useEffect(() => {
+    getCountries();
+  }, []);
 
   const notify = () =>
     toast.success("New Student successfully added to the database!", {
@@ -35,7 +50,7 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       })
-        .then((response) => response.json)
+        .then((response) => response.json())
         .then((data) => {
           onClose();
           notify();
@@ -44,17 +59,20 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
   });
   return (
     <Form onSubmit={formik.handleSubmit}>
-      <Form.Label htmlFor="name" type="label">
-        Name
-      </Form.Label>
-      <Form.Input
-        id="name"
-        name="name"
-        type="text"
-        required
-        onChange={formik.handleChange}
-        value={formik.values.name}
-      />
+      <Form.Wrapper>
+        {" "}
+        <Form.Label htmlFor="name" type="label">
+          Name
+        </Form.Label>
+        <Form.Input
+          id="name"
+          name="name"
+          type="text"
+          required
+          onChange={formik.handleChange}
+          value={formik.values.name}
+        />
+      </Form.Wrapper>
       <Form.Wrapper>
         <Form.Label htmlFor="email" type="label">
           Email
@@ -69,6 +87,23 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
         />
       </Form.Wrapper>
       <Form.Wrapper>
+        <Form.Label htmlFor="country" type="label">
+          Country
+        </Form.Label>
+        <Form.Select
+          value={formik.values.country}
+          onChange={formik.handleChange}
+          name="country"
+        >
+          <option value="" label="Select a country"></option>
+          {allCountries.map((country, index) => {
+            return (
+              <option key={index} value={country} label={country}></option>
+            );
+          })}
+        </Form.Select>
+      </Form.Wrapper>
+      {/* <Form.Wrapper>
         {" "}
         <Form.Label htmlFor="country" type="label">
           Country
@@ -81,7 +116,7 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
           onChange={formik.handleChange}
           value={formik.values.country}
         />
-      </Form.Wrapper>
+      </Form.Wrapper> */}
       <Form.Wrapper>
         <Form.Label htmlFor="age" type="label">
           Age
@@ -105,6 +140,7 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
             value="Male"
             required
             onChange={formik.handleChange}
+            style={{ marginRight: "1em" }}
           />
           Male
         </Form.Label>
@@ -115,19 +151,21 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
             value="Female"
             required
             onChange={formik.handleChange}
+            style={{ marginRight: "1em" }}
           />
           Female
         </Form.Label>
       </Form.Wrapper>
-      <Form.Label id="checkbox-group" type="label">
-        Available Courses
-      </Form.Label>
       <Form.Wrapper role="group" aria-labelledby="checkbox-group">
+        <Form.Label id="checkbox-group" type="label">
+          Available Courses
+        </Form.Label>
         <div
           style={{
             display: "flex",
             flexDirection: "row",
             flexWrap: "wrap",
+            padding: "1em 0em",
           }}
         >
           {isShowing
@@ -138,10 +176,11 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
                     style={{
                       fontSize: "1.0rem",
                       fontWeight: "600",
-                      lineHeight: "0.5",
+                      lineHeight: "1.2",
                       paddingRight: "1em",
                       display: "flex",
                       alignItems: "baseline",
+                      width: "200px",
                     }}
                   >
                     <Form.Input
@@ -152,6 +191,7 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
                         marginRight: "1em",
                         transform: "scale(1.5)",
                         padding: "0.8em",
+                        display: "flex",
                       }}
                       onChange={formik.handleChange}
                     />

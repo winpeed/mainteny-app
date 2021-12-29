@@ -6,6 +6,7 @@ import {
   Input,
   Label,
   Button,
+  Select,
 } from "../form/styles/form";
 
 export default function Form({ children, ...restProps }) {
@@ -24,17 +25,14 @@ Form.Input = function FormInput({ ...restProps }) {
   return <Input {...restProps} />;
 };
 
-Form.Button = React.forwardRef(function FormButton(
-  { children, ...restProps },
-  ref
-) {
-  return (
-    <Button ref={ref} {...restProps}>
-      {children}
-    </Button>
-  );
-});
+Form.Button = function FormButton({ children, ...restProps }) {
+  return <Button {...restProps}>{children}</Button>;
+};
 
 Form.Label = function FormLabel({ children, ...restProps }) {
   return <Label {...restProps}>{children}</Label>;
+};
+
+Form.Select = function FormSelect({ children, ...restProps }) {
+  return <Select {...restProps}>{children}</Select>;
 };

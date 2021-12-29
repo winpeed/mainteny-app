@@ -68,7 +68,7 @@ export const SubTitle = styled.h2`
 `;
 
 export const Input = styled.input`
-  padding: 1em 2em;
+  padding: 0.7em 2em;
   border-radius: 4px;
   border: 1px solid var(--color-gray);
   margin-bottom: 1em;
@@ -88,7 +88,7 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  padding: 1em 1.3em;
+  padding: 0.8em 1.3em;
   background: ${(props) =>
     props.state == "danger"
       ? "var(--color-red)"

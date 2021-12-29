@@ -10,7 +10,7 @@ export const Container = styled.form`
 
 export const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   margin-right: 1em;
   flex: 0 0 32%;
   flex-wrap: wrap;
@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Input = styled.input`
-  padding: 0.8em 2em;
+  padding: 0.4em 2em;
   border-radius: 2px;
   border: 1px solid var(--color-gray);
   margin-bottom: 1em;
@@ -68,7 +68,7 @@ export const Label = styled.label`
   font-size: 0.95rem;
   color: ${(props) =>
     props.type == "label" ? "var(--text-dark)" : "var(--color-dark)"};
-  padding: 0.5em 0em;
+  padding: 0.2em 0em;
 `;
 
 export const Text = styled.p`
@@ -93,4 +93,15 @@ export const Text = styled.p`
   @media (min-width: 1000px) {
     font-size: 1rem;
   }
+`;
+
+export const Select = styled.select`
+  padding: 0.4em;
+  border-radius: 2px;
+  border: 1px solid var(--color-gray);
+  margin-bottom: 1em;
+  color: var(--color-gray);
+  background: var(--text-light);
+  width: 260px;
+  margin-left: 1em;
 `;
