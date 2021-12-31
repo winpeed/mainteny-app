@@ -16,6 +16,7 @@ import {
   Overall,
   Span,
   ContentWrap,
+  Link,
 } from "../profile/styles/profile";
 
 export default function Profile({ children, ...restProps }) {
@@ -84,3 +85,14 @@ Profile.ContentWrap = function ProfileContentWrap({ children, ...restProps }) {
 Profile.ButtonLink = function ProfileButtonLink({ children, ...restProps }) {
   return <ButtonLink {...restProps}>{children}</ButtonLink>;
 };
+
+Profile.Link = React.forwardRef(function ProfileLink(
+  { children, ...restProps },
+  ref
+) {
+  return (
+    <Link ref={ref} {...restProps}>
+      {children}
+    </Link>
+  );
+});

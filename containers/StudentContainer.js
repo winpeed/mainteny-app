@@ -151,6 +151,7 @@ function StudentContainer({ data, status }) {
             onRowClicked={(state) => {
               router.push(`/students/${state._id}`);
             }}
+            noDataComponent={<Loading />}
           />
         )}
       </Profile.Content>

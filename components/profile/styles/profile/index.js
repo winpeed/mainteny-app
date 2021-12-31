@@ -233,3 +233,26 @@ export const ButtonLink = styled.button`
     background: var(--color-gray);
   }
 `;
+
+export const Link = styled.a`
+  padding: 0.6em 1.1em;
+  background: ${(props) =>
+    props.state == "danger"
+      ? "var(--color-red)"
+      : props.state == "success"
+      ? "var(--color-green)"
+      : "var(--color-dark)"};
+  color: var(--text-light);
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+
+  @media (min-width: 510px) {
+    padding: 0.5em 1.2em;
+  }
+`;

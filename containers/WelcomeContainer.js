@@ -1,13 +1,8 @@
 import React from "react";
 import Profile from "../components/profile";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 function WelcomeContainer() {
-  const router = useRouter();
-
-  function handleRouting() {
-    router.push("/students");
-  }
   return (
     <Profile>
       <Profile.Wrapper type="home">
@@ -17,9 +12,9 @@ function WelcomeContainer() {
           </Profile.SubTitle>
         </Profile.ImageWrapper>
         <Profile.ImageWrapper>
-          <Profile.Button state="success" onClick={handleRouting}>
-            Go to Student's Dashboard
-          </Profile.Button>
+          <Link href="/students" passHref>
+            <Profile.Link>Go to Student's Dashboard</Profile.Link>
+          </Link>
         </Profile.ImageWrapper>
       </Profile.Wrapper>
     </Profile>
