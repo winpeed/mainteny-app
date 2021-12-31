@@ -5,10 +5,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Form from "./form";
 import { cour } from "../courses";
+import axios from "axios";
 
-function CourseForm({ takenCourses, person, onClose, onCourses }) {
+function CourseForm({ takenCourses, onClose, onCourses, data }) {
   const { handleSubmit, register } = useForm();
-  const [studentCourses, setStudentCourses] = useState([...takenCourses]);
+  const [studentCourses, setStudentCourses] = useState([]);
   const [allCourses, setAllCourses] = useState([...cour]);
 
   const notify = () =>
@@ -23,17 +24,16 @@ function CourseForm({ takenCourses, person, onClose, onCourses }) {
     });
 
   async function updateContact(value) {
-    const id = String(person._id);
+    const id = String(data.data._id);
 
     try {
-      const response = await fetch(`/api/v1/students/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ courses: [...value.courses] }),
+      const response = await axios.put(`/api/v1/students/${id}`, {
+        courses: [...value.courses],
       });
+
+      onCourses();
       notify();
       onClose();
-      onCourses();
     } catch (err) {
       return err;
     }
@@ -43,13 +43,16 @@ function CourseForm({ takenCourses, person, onClose, onCourses }) {
     updateContact(values);
   }
 
-  useEffect(() => {}, [studentCourses]);
+  useEffect(() => {
+    setStudentCourses(takenCourses);
+  }, [takenCourses]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Label id="checkbox-group" type="label">
-        (Check all that apply)
+        Courses
       </Form.Label>
+      <Form.Text>(Check all that apply)</Form.Text>
       <Form.Wrapper>
         <CheckboxGroup
           colorScheme="blue"

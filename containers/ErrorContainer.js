@@ -1,15 +1,20 @@
 import React from "react";
 import Profile from "../components/profile";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function ErrorContainer() {
+  const router = useRouter();
+
+  function handleRouting() {
+    router.push("/");
+  }
   return (
     <Profile>
       <Profile.Wrapper type="home">
-        <Profile.SubTitle>
-          Oops, this page is currently not available.
-        </Profile.SubTitle>
+        <Profile.ImageWrapper>
+          <Profile.SubTitle>Oops, this page is not available.</Profile.SubTitle>
+        </Profile.ImageWrapper>
         <Profile.ImageWrapper>
           <Image
             src="/under_construction.svg"
@@ -18,9 +23,9 @@ export default function ErrorContainer() {
             width={500}
           />
         </Profile.ImageWrapper>
-        <Link href="/signin" passHref>
-          <Profile.Button>Sign in as Admin</Profile.Button>
-        </Link>
+        <Profile.ImageWrapper justify="center">
+          <Profile.Button onClick={handleRouting}>Go Home</Profile.Button>
+        </Profile.ImageWrapper>
       </Profile.Wrapper>
     </Profile>
   );

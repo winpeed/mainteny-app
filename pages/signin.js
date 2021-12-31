@@ -2,7 +2,7 @@ import React from "react";
 import SignInContainer from "../containers/SignInContainer";
 import { getProviders, getSession, getCsrfToken } from "next-auth/react";
 
-function signin({ providers, csrfToken, session }) {
+function SignIn({ providers, csrfToken, session }) {
   return (
     <>
       <SignInContainer
@@ -14,13 +14,13 @@ function signin({ providers, csrfToken, session }) {
   );
 }
 
-export default signin;
+export default SignIn;
 
 export async function getServerSideProps(context) {
   return {
     props: {
-      providers: await getProviders(context),
       session: await getSession(context),
+      providers: await getProviders(context),
       csrfToken: await getCsrfToken(context),
     },
   };

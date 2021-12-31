@@ -1,29 +1,48 @@
 import React from "react";
 import HeaderContainer from "../../containers/HeaderContainer";
 import ProfileContainer from "../../containers/ProfileContainer";
+import HomeContainer from "../../containers/HomeContainer";
+import SideContainer from "../../containers/SideContainer";
 import { getStudents } from "../api/v1/students";
 import { getOneStudent } from "../api/v1/students/[id]";
+import { useSession } from "next-auth/react";
+import Profile from "../../components/profile";
+import Loading from "../../components/Loading";
 
-export default function student({ data }) {
+export default function Student({ data }) {
+  const { status } = useSession();
+
   return (
     <>
       <HeaderContainer />
-      <ProfileContainer data={data} />
+      {status === "loading" || status === "nonauthenticated" ? (
+        <>
+          <HomeContainer />
+          <Loading />
+        </>
+      ) : (
+        <Profile type="content">
+          <SideContainer />
+          <ProfileContainer data={data} status={status} />
+        </Profile>
+      )}
+      )
     </>
   );
 }
 
 export async function getStaticProps(context) {
   const response = await getOneStudent(context.params.id);
+  const { courses, age, gender, name, email, country, updatedAt } = response;
   const data = {
     _id: String(response._id),
-    courses: response.courses,
-    age: response.age,
-    gender: response.gender,
-    name: response.name,
-    email: response.email,
-    country: response.country,
-    updatedAt: String(response.updatedAt),
+    courses,
+    age,
+    gender,
+    name,
+    email,
+    country,
+    updatedAt: String(updatedAt),
   };
 
   if (!data) {
@@ -33,7 +52,7 @@ export async function getStaticProps(context) {
   }
 
   return {
-    props: { data },
+    props: { data: data },
     revalidate: 1,
   };
 }
@@ -61,6 +80,6 @@ export async function getStaticPaths(context) {
 
   return {
     paths: paths,
-    fallback: "blocking",
+    fallback: false,
   };
 }

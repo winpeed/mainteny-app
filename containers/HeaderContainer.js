@@ -1,40 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/header";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
+import SignOut from "../components/SignOut";
+import { Modal } from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
+import Profile from "../components/profile";
+import { useRouter } from "next/router";
 
-const HeaderContainer = () => {
-  const { data: session } = useSession();
+const HeaderContainer = ({ status }) => {
+  const [open, setOpen] = useState(false);
+
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
+
+  const router = useRouter();
+
+  function handleSignIn() {
+    router.push("/signin");
+  }
+
   return (
-    <Header>
-      <Link href="/" passHref>
-        <Header.NavItem type="logo" className="logo">
-          Mainteny Uni
-        </Header.NavItem>
-      </Link>
+    <>
+      <Modal
+        open={open}
+        onClose={onCloseModal}
+        center
+        classNames={{
+          overlay: "customOverlay",
+        }}
+        aria-labelledby="Sign Out Modal"
+        aria-describedby="A modal option for signing out"
+      >
+        <SignOut onClose={onCloseModal} />
+      </Modal>
+      <Header>
+        <Link href="/" passHref>
+          <Header.NavItem type="logo" className="logo">
+            Mainteny Uni
+          </Header.NavItem>
+        </Link>
 
-      <Header.NavContent>
-        <Header.NavList>
-          <Link href="/" passHref>
-            <Header.NavItem>Home</Header.NavItem>
-          </Link>
-          {!session ? (
-            <Link href="/api/auth/signin" passHref>
-              <Header.NavItem onClick={() => signIn("credentials")} sign="in">
+        <Header.NavContent>
+          <Header.NavList>
+            <Link href="/" passHref>
+              <Header.NavItem>Home</Header.NavItem>
+            </Link>
+            {status === "loading" || status === "unauthenticated" ? (
+              <Profile.Button onClick={handleSignIn} state="success">
                 Sign In
-              </Header.NavItem>
-            </Link>
-          ) : (
-            <Link href="/api/auth/signout" passHref>
-              <Header.NavItem onClick={() => signOut("credentials")} sign="out">
+              </Profile.Button>
+            ) : (
+              <Profile.Button onClick={onOpenModal} state="danger">
                 Sign Out
-              </Header.NavItem>
-            </Link>
-          )}
-        </Header.NavList>
-        <Header.HamburgerSpan></Header.HamburgerSpan>
-      </Header.NavContent>
-    </Header>
+              </Profile.Button>
+            )}
+          </Header.NavList>
+          <Header.HamburgerSpan></Header.HamburgerSpan>
+        </Header.NavContent>
+      </Header>
+    </>
   );
 };
 

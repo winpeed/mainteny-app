@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import Link from "next/link";
-import SideContainer from "./SideContainer";
 import CourseForm from "../components/CourseForm";
 import Profile from "../components/profile";
 import { Modal } from "react-responsive-modal";
@@ -10,14 +8,21 @@ import "react-responsive-modal/styles.css";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import Loading from "../components/Loading";
 
-function ProfileContainer({ data }) {
-  const [person, setPerson] = useState(data);
-  const [takenCourses, setTakenCourses] = useState(data.courses);
+function ProfileContainer(data) {
+  const [person, setPerson] = useState({});
+  const [takenCourses, setTakenCourses] = useState([]);
+  const [allCourses, setAllCourses] = useState([]);
   const [allStudents, setAllStudents] = useState([]);
+
+  const { _id, name, age, gender, email, country } = person;
 
   const [open, setOpen] = useState(false);
   const [notice, setNotice] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
 
@@ -41,38 +46,47 @@ function ProfileContainer({ data }) {
       progress: undefined,
     });
 
-  const { name, age, email, country, gender } = person;
+  function handleRouting() {
+    router.push("/students");
+  }
 
-  async function deleteContact() {
-    const id = String(person._id);
+  useEffect(() => {
+    getPerson();
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isLoading]);
+
+  //Get Details of A Person/ Student and Set the Data in the state
+  async function getPerson() {
+    const id = String(data.data._id);
 
     try {
-      const response = await fetch(`/api/v1/students/${id}`, {
-        method: "DELETE",
-      });
+      const response = await axios.get(`/api/v1/students/${id}`);
+      setPerson(response.data.data);
+      setTakenCourses(response.data.data.courses);
+      setAllCourses(response.data.data.courses);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  //Delete a student from the database
+  async function deleteContact() {
+    const id = String(data.data._id);
+
+    try {
+      const response = await axios.delete(`/api/v1/students/${id}`);
       notify();
       router.push("/students");
     } catch (err) {
       return err;
     }
-  }
-
-  useEffect(() => {
-    getCourses();
-    coursesUpdate();
-  }, [open]);
-
-  async function getCourses() {
-    const response = await fetch(`/api/v1/students/`);
-    const results = await response.json();
-    setAllStudents(results.data);
-  }
-
-  async function coursesUpdate() {
-    const id = String(person._id);
-    const response = await fetch(`/api/v1/students/${id}`);
-    const results = await response.json();
-    setTakenCourses(results.data.courses);
   }
 
   return (
@@ -92,7 +106,8 @@ function ProfileContainer({ data }) {
           takenCourses={takenCourses}
           person={person}
           onClose={() => setOpen(false)}
-          onCourses={() => getCourses()}
+          onCourses={() => getPerson()}
+          data={data}
         />
       </Modal>
       <Modal
@@ -107,7 +122,7 @@ function ProfileContainer({ data }) {
       >
         <Profile.Wrapper align="center">
           <Profile.Text align="center">
-            Are you sure want to delete {person.name}'s data from the database?
+            Are you sure want to delete {name}'s data from the database?
           </Profile.Text>
           <Profile.ImageWrapper>
             <Profile.Button onClick={onNoticeClose}>No</Profile.Button>
@@ -117,23 +132,23 @@ function ProfileContainer({ data }) {
           </Profile.ImageWrapper>
         </Profile.Wrapper>
       </Modal>
-      <Profile type="content">
-        <SideContainer allStudents={allStudents} />
 
-        <Profile.Content>
-          <Profile.ImageWrapper>
-            <Link href="/students" passHref>
-              <Profile.Button>
-                <MdOutlineKeyboardBackspace
-                  style={{ fontSize: "1.2rem", marginRight: "0.4em" }}
-                />
-                Go Back
-              </Profile.Button>
-            </Link>
-            <Profile.Button onClick={onOpenModal} state="success">
-              Edit Courses
-            </Profile.Button>
-          </Profile.ImageWrapper>
+      <Profile.Content>
+        <Profile.ImageWrapper>
+          <Profile.ButtonLink onClick={handleRouting}>
+            <MdOutlineKeyboardBackspace
+              style={{ fontSize: "1.2rem", marginRight: "0.4em" }}
+            />
+            Go Back
+          </Profile.ButtonLink>
+
+          <Profile.ButtonLink onClick={onOpenModal} state="success">
+            Edit Courses
+          </Profile.ButtonLink>
+        </Profile.ImageWrapper>
+        {isLoading ? (
+          <Loading />
+        ) : (
           <Profile.Card>
             <Profile.ImageWrapper justify="center">
               <Image
@@ -170,8 +185,7 @@ function ProfileContainer({ data }) {
                 <Profile.Wrapper>
                   <Profile.Name>Courses Offered</Profile.Name>
                   <Profile.Wrapper direction="row">
-                    {" "}
-                    {takenCourses.map((course, index) => {
+                    {allCourses.map((course, index) => {
                       return <Profile.Span key={index}>{course}</Profile.Span>;
                     })}
                   </Profile.Wrapper>
@@ -184,13 +198,13 @@ function ProfileContainer({ data }) {
               </Profile.Row>
             </Profile.Overall>
           </Profile.Card>
-          <Profile.ImageWrapper justify="center">
-            <Profile.Button onClick={onNoticeOpen} state="danger">
-              Delete Student Data
-            </Profile.Button>
-          </Profile.ImageWrapper>
-        </Profile.Content>
-      </Profile>
+        )}
+        <Profile.ImageWrapper justify="center">
+          <Profile.Button onClick={onNoticeOpen} state="danger">
+            Delete Student Data
+          </Profile.Button>
+        </Profile.ImageWrapper>
+      </Profile.Content>
     </>
   );
 }

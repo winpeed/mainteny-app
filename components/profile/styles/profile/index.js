@@ -68,15 +68,15 @@ export const SubTitle = styled.h2`
 `;
 
 export const Input = styled.input`
-  padding: 0.7em 2em;
+  padding: 0.6em 2em;
   border-radius: 4px;
   border: 1px solid var(--color-gray);
   margin-bottom: 1em;
   color: var(--color-gray);
   background: var(--text-light);
-  font-weight: 600;
-  opacity: 0.8;
-  letter-spacing: 0.02em;
+  font-weight: 400;
+  opacity: 0.9;
+  letter-spacing: 0.01em;
 
   &:focus {
     background: var(--text-light);
@@ -88,7 +88,7 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  padding: 0.8em 1.3em;
+  padding: 0.6em 1.1em;
   background: ${(props) =>
     props.state == "danger"
       ? "var(--color-red)"
@@ -100,14 +100,13 @@ export const Button = styled.button`
   border: none;
   cursor: pointer;
   font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 0.9em;
+  font-size: 0.9rem;
   text-align: center;
   display: flex;
   align-items: center;
 
   @media (min-width: 510px) {
-    padding: 1em 1.5em;
+    padding: 0.5em 1.2em;
   }
 `;
 
@@ -174,7 +173,7 @@ export const Overall = styled.div`
 
 export const Text = styled.p`
   color: ${(props) =>
-    props.color == "light" ? "var(--color-light)" : "var(--color-gray)"};
+    props.color == "light" ? "var(--color-light)" : "var(--color-dark)"};
   font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -205,4 +204,32 @@ export const ContentWrap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const ButtonLink = styled.button`
+  padding: 0.6em 1em;
+  background: ${(props) =>
+    props.state == "danger"
+      ? "var(--color-red)"
+      : props.state == "success"
+      ? "var(--color-green)"
+      : "var(--text-dark)"};
+  color: var(--text-light);
+  border-radius: 4px;
+  border: 1px solid var(--color-gray);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.9em;
+  text-align: center;
+  display: flex;
+  align-items: center;
+
+  @media (min-width: 510px) {
+    padding: 0.6em 1.2em;
+  }
+
+  &:disabled {
+    background: var(--color-gray);
+  }
 `;

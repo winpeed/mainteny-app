@@ -1,34 +1,28 @@
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import Profile from "../components/profile";
 import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
+import Loading from "../components/Loading";
 
-function HomeContainer() {
-  const { data: session } = useSession();
-
-  let [loading, setLoading] = useState(true);
-  let [color, setColor] = useState("#000000");
-
+function HomeContainer({ user }) {
   const router = useRouter();
 
-  if (session) {
-    router.push("/students");
-  }
-
   useEffect(() => {
-    if (session) {
-      setLoading(true);
-    }
-    router.prefetch("/students");
-  }, [loading, session]);
+    // if (user) {
+    //   router.push("/students");
+    //    router.prefetch("/students");
+    // }
+  }, []);
+
+  function handleSignIn() {
+    router.push("/signin");
+  }
 
   return (
     <Profile>
-      {!session ? (
+      {!user ? (
         <Profile.Wrapper type="home">
           <Profile.ImageWrapper>
             <Profile.SubTitle>
@@ -44,17 +38,13 @@ function HomeContainer() {
             />
           </Profile.ImageWrapper>
           <Profile.ImageWrapper>
-            <Link href="/signin" passHref>
-              <Profile.Button state="success">Sign in as Admin</Profile.Button>
-            </Link>
+            <Profile.Button state="success" onClick={handleSignIn}>
+              Sign in as Admin
+            </Profile.Button>
           </Profile.ImageWrapper>
         </Profile.Wrapper>
-      ) : session && loading ? (
-        <Profile.Wrapper type="home">
-          {" "}
-          <ClipLoader color={color} loading={loading} size={85} />
-          <Profile.Name>Signing in....</Profile.Name>
-        </Profile.Wrapper>
+      ) : user ? (
+        <Loading />
       ) : null}
     </Profile>
   );

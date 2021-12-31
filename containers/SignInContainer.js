@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -6,10 +6,8 @@ import { FaLongArrowAltLeft } from "react-icons/fa";
 import Sign from "../components/sign";
 
 function SignInContainer({ csrfToken }) {
-  const [isError, setIsError] = useState(false);
-
   const router = useRouter();
-  const { error } = router.query;
+  const error = router.query.error;
 
   const errors = {
     Signin: "Try signing with a different account.",
@@ -53,15 +51,13 @@ function SignInContainer({ csrfToken }) {
 
         <Sign.Wrapper>
           <Sign.Heading>Welcome to Mainteny Uni Admin Portal.</Sign.Heading>
+
           {error && <SignInError error={error} />}
           <Sign.Form action="/api/auth/callback/credentials" method="POST">
             <Sign.Input
               name="csrfToken"
               type="hidden"
               defaultValue={csrfToken}
-              onFocus={() => {
-                setIsError(false);
-              }}
             />
             <Sign.Label htmlFor="input-username-for-credentials-provider">
               Username
@@ -70,10 +66,8 @@ function SignInContainer({ csrfToken }) {
               type="text"
               placeholder="Enter Username"
               name="username"
+              label="username"
               id="input-username-for-credentials-provider"
-              onFocus={() => {
-                setIsError(false);
-              }}
               required
             />
             <Sign.Label htmlFor="input-password-for-credentials-provider">
@@ -83,10 +77,11 @@ function SignInContainer({ csrfToken }) {
               type="password"
               placeholder="Enter Your Password"
               name="password"
+              label="Password"
               id="input-password-for-credentials-provider"
               required
             />
-            <Sign.Button type="submit">Login</Sign.Button>
+            <Sign.ButtonInput type="submit">Login</Sign.ButtonInput>
             <Sign.Wrapper style={{ flexDirection: "row" }}>
               <Sign.Text>Not an admin yet?</Sign.Text>
 

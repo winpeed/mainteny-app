@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useContext, createContext } from "react";
+import React from "react";
+import { useEffect, useState, useContext, createContext } from "react";
 import {
   Container,
   NavContent,
@@ -93,7 +94,7 @@ Header.NavItem = React.forwardRef(function HeaderNavItem(
 ) {
   const { setToggleState } = useContext(ToggleContext);
   return (
-    <NavItem {...restProps} onClick={() => setToggleState(false)}>
+    <NavItem ref={ref} {...restProps} onClick={() => setToggleState(false)}>
       {children}
     </NavItem>
   );

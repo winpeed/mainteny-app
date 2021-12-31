@@ -16,10 +16,6 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
     setAllCountries(data.sort());
   }
 
-  function handleChange(event) {
-    console.log(event.target.value);
-  }
-
   useEffect(() => {
     getCountries();
   }, []);

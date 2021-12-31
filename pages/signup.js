@@ -1,8 +1,8 @@
 import React from "react";
 import SignUpContainer from "../containers/SignUpContainer";
 
-function signup() {
+function SignUp() {
   return <SignUpContainer />;
 }
 
-export default signup;
+export default SignUp;

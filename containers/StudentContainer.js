@@ -3,15 +3,18 @@ import Profile from "../components/profile";
 import DataTable from "react-data-table-component";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
-import SideContainer from "./SideContainer";
 import StudentForm from "../components/StudentForm";
 import { useRouter } from "next/router";
+import Loading from "../components/Loading";
+import axios from "axios";
 
-function StudentContainer({ data }) {
+function StudentContainer({ data, status }) {
   const [searchText, setSearchText] = useState("");
 
-  const [allStudents, setAllStudents] = useState(data);
+  const [allStudents, setAllStudents] = useState([]);
   const [isShowing, setIsShowing] = useState(true);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [open, setOpen] = useState(false);
 
@@ -21,18 +24,43 @@ function StudentContainer({ data }) {
   const router = useRouter();
 
   async function getStudents() {
-    const response = await fetch("/api/v1/students");
-    const res = await response.json();
-    const { data } = res;
-    setAllStudents(data);
+    try {
+      const response = await axios.get("/api/v1/students");
+      setAllStudents(response.data.data);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
-  useEffect(() => {}, [allStudents]);
+  useEffect(() => {
+    getStudents();
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [data, isLoading]);
 
   const columns = [
     {
+      name: "S/N",
+      cell: (row, index) => index + 1,
+      center: true,
+      maxWidth: "30px",
+    },
+    {
       name: "Name",
       selector: (row) => row.name,
+      center: true,
+    },
+    {
+      name: "Gender",
+      selector: (row) => row.gender,
+      maxWidth: "60px",
+      hide: ("sm", "md"),
       center: true,
     },
     {
@@ -41,12 +69,7 @@ function StudentContainer({ data }) {
       hide: ("sm", "md"),
       center: true,
     },
-    {
-      name: "Gender",
-      selector: (row) => row.gender,
-      maxWidth: "60px",
-      center: true,
-    },
+
     {
       name: "Age",
       selector: (row) => row.age,
@@ -58,7 +81,6 @@ function StudentContainer({ data }) {
       name: "Country",
       selector: (row) => row.country,
       maxWidth: "120px",
-      hide: ("sm", "md"),
       center: true,
     },
   ];
@@ -86,9 +108,9 @@ function StudentContainer({ data }) {
           open={open}
         />
       </Modal>
-      <Profile type="content">
-        <SideContainer allStudents={allStudents} />
-        <Profile.Content>
+
+      <Profile.Content>
+        <Profile.ImageWrapper justify="center">
           <Profile.Input
             type="text"
             placeholder="Search for Students"
@@ -96,24 +118,31 @@ function StudentContainer({ data }) {
             value={searchText}
             onChange={({ target }) => setSearchText(target.value)}
           />
-
-          <Profile.ContentWrap>
-            <Profile.SubTitle>Students</Profile.SubTitle>
-            <Profile.Button onClick={onOpenModal} state="success">
-              Add New Student
-            </Profile.Button>{" "}
-          </Profile.ContentWrap>
+        </Profile.ImageWrapper>
+        <Profile.ContentWrap>
+          <Profile.SubTitle>Students</Profile.SubTitle>
+          <Profile.Button onClick={onOpenModal} state="success">
+            Add New Student
+          </Profile.Button>{" "}
+        </Profile.ContentWrap>
+        {isLoading ? (
+          <Loading />
+        ) : (
           <DataTable
             columns={columns}
-            data={allStudents.filter((item) => {
-              if (searchText === "") {
-                return item;
-              } else if (
-                item.name.toLowerCase().includes(searchText.toLowerCase())
-              ) {
-                return item;
-              }
-            })}
+            data={
+              status === "loading" || status === "nonauthenticated"
+                ? null
+                : allStudents.filter((item) => {
+                    if (searchText === "") {
+                      return item;
+                    } else if (
+                      item.name.toLowerCase().includes(searchText.toLowerCase())
+                    ) {
+                      return item;
+                    }
+                  })
+            }
             pagination
             paginationPerPage={10}
             paginationRowsPerPageOptions={[5, 10, 15, 20, 25]}
@@ -123,8 +152,8 @@ function StudentContainer({ data }) {
               router.push(`/students/${state._id}`);
             }}
           />
-        </Profile.Content>
-      </Profile>
+        )}
+      </Profile.Content>
     </>
   );
 }

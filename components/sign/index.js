@@ -9,9 +9,10 @@ import {
   Form,
   Input,
   Button,
+  ButtonInput,
+  Link,
   Text,
   Label,
-  Link,
   ImageWrapper,
 } from "../sign/styles/sign";
 
@@ -47,16 +48,9 @@ Sign.Input = function SignInput({ ...restProps }) {
   return <Input {...restProps} />;
 };
 
-Sign.Button = React.forwardRef(function SignButton(
-  { children, ...restProps },
-  ref
-) {
-  return (
-    <Button ref={ref} {...restProps}>
-      {children}
-    </Button>
-  );
-});
+Sign.Button = function SignButton({ children, ...restProps }) {
+  return <Button {...restProps}>{children}</Button>;
+};
 
 Sign.Text = function SignText({ children, ...restProps }) {
   return <Text {...restProps}>{children}</Text>;
@@ -64,6 +58,10 @@ Sign.Text = function SignText({ children, ...restProps }) {
 
 Sign.Label = function SignLabel({ children, ...restProps }) {
   return <Label {...restProps}>{children}</Label>;
+};
+
+Sign.ImageWrapper = function SignImageWrapper({ children, ...restProps }) {
+  return <ImageWrapper {...restProps}>{children}</ImageWrapper>;
 };
 
 Sign.Link = React.forwardRef(function SignLink(
@@ -77,6 +75,6 @@ Sign.Link = React.forwardRef(function SignLink(
   );
 });
 
-Sign.ImageWrapper = function SignImageWrapper({ children, ...restProps }) {
-  return <ImageWrapper {...restProps}>{children}</ImageWrapper>;
+Sign.ButtonInput = function SignButtonInput({ children, ...restProps }) {
+  return <ButtonInput {...restProps}>{children}</ButtonInput>;
 };

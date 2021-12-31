@@ -7,6 +7,7 @@ import {
   SubTitle,
   Input,
   Button,
+  ButtonLink,
   Name,
   ImageWrapper,
   Wrapper,
@@ -45,16 +46,9 @@ Profile.Input = function ProfileInput({ ...restProps }) {
   return <Input {...restProps} />;
 };
 
-Profile.Button = React.forwardRef(function ProfileButton(
-  { children, ...restProps },
-  ref
-) {
-  return (
-    <Button ref={ref} {...restProps}>
-      {children}
-    </Button>
-  );
-});
+Profile.Button = function ProfileButton({ children, ...restProps }) {
+  return <Button {...restProps}>{children}</Button>;
+};
 
 Profile.Name = function ProfileName({ children, ...restProps }) {
   return <Name {...restProps}>{children}</Name>;
@@ -85,4 +79,8 @@ Profile.Span = function ProfileSpan({ children, ...restProps }) {
 
 Profile.ContentWrap = function ProfileContentWrap({ children, ...restProps }) {
   return <ContentWrap {...restProps}>{children}</ContentWrap>;
+};
+
+Profile.ButtonLink = function ProfileButtonLink({ children, ...restProps }) {
+  return <ButtonLink {...restProps}>{children}</ButtonLink>;
 };

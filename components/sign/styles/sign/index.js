@@ -123,7 +123,7 @@ export const Form = styled.form`
 `;
 
 export const Input = styled.input`
-  padding: 1em 2em;
+  padding: 0.8em 2em;
   border-radius: 4px;
   border: 1px solid var(--color-gray);
   margin-bottom: 1em;
@@ -163,11 +163,37 @@ export const Button = styled.button`
   }
 `;
 
+export const ButtonInput = styled.button`
+  padding: 1em 2em;
+  background: var(--text-dark);
+  color: var(--text-light);
+  border-radius: 4px;
+  border: 1px solid var(--color-gray);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.9em;
+  text-align: center;
+
+  @media (min-width: 510px) {
+    padding: 1em 1.5em;
+  }
+
+  &:disabled {
+    background: var(--color-gray);
+  }
+`;
+
 export const Label = styled(Text)`
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--color-gray);
   opacity: 0.85;
+`;
+
+export const ImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const Link = styled.a`
@@ -180,9 +206,4 @@ export const Link = styled.a`
   font-size: 0.95rem;
   align-items: center;
   opacity: ${(props) => (props.mode === "url" ? "1.0" : "0.8")};
-`;
-
-export const ImageWrapper = styled.div`
-  display: flex;
-  align-items: center;
 `;

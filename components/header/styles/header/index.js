@@ -40,6 +40,7 @@ export const NavItem = styled.a`
       : props.sign == "in"
       ? "var(--color-green)"
       : null};
+  cursor: pointer;
 
   @media (min-width: 850px) {
     color: var(--text-light);
