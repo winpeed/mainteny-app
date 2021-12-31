@@ -147,13 +147,23 @@ function ProfileContainer(data) {
         ) : (
           <Profile.Card>
             <Profile.ImageWrapper justify="center">
-              <Image
-                src="/vice.svg"
-                width={180}
-                height={180}
-                objectFit="contain"
-                alt="Vice-Chancellor, Mainteny Uni"
-              />
+              {gender == "Male" ? (
+                <Image
+                  src="/male.jpg"
+                  width={180}
+                  height={180}
+                  objectFit="contain"
+                  alt="Male Picture"
+                />
+              ) : (
+                <Image
+                  src="/vice.svg"
+                  width={180}
+                  height={180}
+                  objectFit="contain"
+                  alt="Female Picture"
+                />
+              )}
             </Profile.ImageWrapper>
 
             <Profile.Overall>

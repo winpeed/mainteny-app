@@ -15,8 +15,22 @@ describe("Header Container", () => {
     render(<HeaderContainer />);
   });
 
+  it("has the Sign In or Sign Out Button Texts", () => {
+    const textToFind = "Sign Out" || "Sign In";
+    render(<HeaderContainer />);
+    const signTexts = screen.getByText(textToFind);
+    expect(signTexts).toBeInTheDocument();
+  });
+
   it("renders The Home Container", () => {
     render(<HomeContainer />);
+  });
+
+  it("has the Sign in as Admin CTA on the landing page", () => {
+    const textToFind = "Sign in as Admin";
+    render(<HomeContainer />);
+    const signTexts = screen.getByText(textToFind);
+    expect(signTexts).toBeInTheDocument();
   });
 
   it("renders The Error Container", () => {
