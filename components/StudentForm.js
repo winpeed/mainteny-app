@@ -99,20 +99,6 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
           })}
         </Form.Select>
       </Form.Wrapper>
-      {/* <Form.Wrapper>
-        {" "}
-        <Form.Label htmlFor="country" type="label">
-          Country
-        </Form.Label>
-        <Form.Input
-          id="country"
-          name="country"
-          type="text"
-          required
-          onChange={formik.handleChange}
-          value={formik.values.country}
-        />
-      </Form.Wrapper> */}
       <Form.Wrapper>
         <Form.Label htmlFor="age" type="label">
           Age

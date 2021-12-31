@@ -13,16 +13,14 @@ import Loading from "../components/Loading";
 
 function ProfileContainer(data) {
   const [person, setPerson] = useState({});
-  const [takenCourses, setTakenCourses] = useState([]);
   const [allCourses, setAllCourses] = useState([]);
-  const [allStudents, setAllStudents] = useState([]);
 
   const { _id, name, age, gender, email, country } = person;
 
   const [open, setOpen] = useState(false);
   const [notice, setNotice] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
@@ -53,14 +51,13 @@ function ProfileContainer(data) {
   useEffect(() => {
     getPerson();
 
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [isLoading]);
+    // const timer = setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 1500);
+    // return () => {
+    //   clearTimeout(timer);
+    // };
+  }, []);
 
   //Get Details of A Person/ Student and Set the Data in the state
   async function getPerson() {
@@ -69,8 +66,8 @@ function ProfileContainer(data) {
     try {
       const response = await axios.get(`/api/v1/students/${id}`);
       setPerson(response.data.data);
-      setTakenCourses(response.data.data.courses);
       setAllCourses(response.data.data.courses);
+      setIsLoading(true);
     } catch (err) {
       console.error(err);
     }
@@ -103,8 +100,7 @@ function ProfileContainer(data) {
         aria-describedby="A Form to Add new courses to existing courses"
       >
         <CourseForm
-          takenCourses={takenCourses}
-          person={person}
+          allCourses={allCourses}
           onClose={() => setOpen(false)}
           onCourses={() => getPerson()}
           data={data}
@@ -146,7 +142,7 @@ function ProfileContainer(data) {
             Edit Courses
           </Profile.ButtonLink>
         </Profile.ImageWrapper>
-        {isLoading ? (
+        {!isLoading ? (
           <Loading />
         ) : (
           <Profile.Card>

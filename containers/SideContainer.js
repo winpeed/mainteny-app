@@ -11,6 +11,7 @@ function SideContainer({ data }) {
     try {
       const response = await axios.get("/api/v1/students");
       setAllStudents(response.data.data);
+      setIsLoading(false);
     } catch (err) {
       console.error(err);
     }
@@ -18,13 +19,6 @@ function SideContainer({ data }) {
 
   useEffect(() => {
     getStudents();
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-
-    return () => {
-      clearTimeout(timer);
-    };
   }, [isLoading]);
   return (
     <Profile.Content type="left">

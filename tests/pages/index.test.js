@@ -10,25 +10,37 @@ import Student from "../../pages/students/[id]";
 describe("Header Container", () => {
   it("renders The Home Page", () => {
     render(<Home />);
+    const main = screen.getByRole("main");
+    expect(main).toBeInTheDocument();
   });
 
   it("renders The Signin Page", () => {
     render(<SignIn />);
+    const main = screen.getByRole("main");
+    expect(main).toBeInTheDocument();
   });
 
   it("renders The SignUp Page", () => {
     render(<SignUp />);
+    const main = screen.getByRole("main");
+    expect(main).toBeInTheDocument();
   });
 
   it("renders The ErrorPage Page", () => {
     render(<ErrorPage />);
+    const main = screen.getByRole("main");
+    expect(main).toBeInTheDocument();
   });
 
   it("renders The Students Dashboard", () => {
     render(<Students />);
+    const main = screen.getByRole("main");
+    expect(main).toBeInTheDocument();
   });
 
   it("renders The Student Profile Page", () => {
     render(<Student />);
+    const main = screen.getByRole("main");
+    expect(main).toBeInTheDocument();
   });
 });

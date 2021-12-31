@@ -7,10 +7,10 @@ import Form from "./form";
 import { cour } from "../courses";
 import axios from "axios";
 
-function CourseForm({ takenCourses, onClose, onCourses, data }) {
+function CourseForm({ onClose, onCourses, data, allCourses }) {
   const { handleSubmit, register } = useForm();
   const [studentCourses, setStudentCourses] = useState([]);
-  const [allCourses, setAllCourses] = useState([...cour]);
+  const [schoolCourses, setAllSchoolCourses] = useState([...cour]);
 
   const notify = () =>
     toast.success(`Courses updated!`, {
@@ -39,13 +39,24 @@ function CourseForm({ takenCourses, onClose, onCourses, data }) {
     }
   }
 
+  async function getCourses() {
+    const id = String(data.data._id);
+
+    try {
+      const response = await axios.get(`/api/v1/students/${id}`);
+      setStudentCourses(response.data.data.courses);
+    } catch (err) {
+      return err;
+    }
+  }
+
   function onSubmit(values) {
     updateContact(values);
   }
 
   useEffect(() => {
-    setStudentCourses(takenCourses);
-  }, [takenCourses]);
+    getCourses();
+  }, []);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -56,10 +67,10 @@ function CourseForm({ takenCourses, onClose, onCourses, data }) {
       <Form.Wrapper>
         <CheckboxGroup
           colorScheme="blue"
-          defaultValue={[...studentCourses]}
+          defaultValue={[...allCourses]}
           aria-labelledby="checkbox-group"
         >
-          {allCourses.map((course, index) => {
+          {schoolCourses.map((course, index) => {
             return (
               <Checkbox
                 value={`${course}`}
