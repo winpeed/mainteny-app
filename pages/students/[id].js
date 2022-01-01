@@ -33,6 +33,7 @@ export default function Student({ data }) {
 
 export async function getStaticProps(context) {
   const response = await getOneStudent(context.params.id);
+
   const { courses, age, gender, name, email, country, updatedAt } = response;
   const data = {
     _id: String(response._id),
@@ -47,12 +48,15 @@ export async function getStaticProps(context) {
 
   if (!data) {
     return {
-      notFound: true,
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
     };
   }
 
   return {
-    props: { data: data },
+    props: { data },
     revalidate: 1,
   };
 }
@@ -80,6 +84,6 @@ export async function getStaticPaths(context) {
 
   return {
     paths: paths,
-    fallback: false,
+    fallback: "blocking",
   };
 }

@@ -50,13 +50,6 @@ function ProfileContainer(data) {
 
   useEffect(() => {
     getPerson();
-
-    // const timer = setTimeout(() => {
-    //   setIsLoading(false);
-    // }, 1500);
-    // return () => {
-    //   clearTimeout(timer);
-    // };
   }, []);
 
   //Get Details of A Person/ Student and Set the Data in the state

@@ -39,7 +39,7 @@ export const Card = styled.section`
 `;
 
 export const PageTitle = styled.h1`
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   text-align: center;
   color: var(--text-dark);
   font-weight: 700;
@@ -48,13 +48,13 @@ export const PageTitle = styled.h1`
   margin: 0.7em 2em 0.3em 0em;
 
   @media (min-width: 510px) {
-    font-size: 2rem;
+    font-size: 1.6rem;
     margin: 0em 1em 0.5em 0em;
     max-width: 85%;
   }
 
   @media (min-width: 1100px) {
-    font-size: 2.3rem;
+    font-size: 1.8rem;
   }
 `;
 

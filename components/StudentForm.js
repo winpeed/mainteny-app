@@ -4,16 +4,21 @@ import Form from "./form/index";
 import { cour } from "../courses";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 export default function StudentForm({ data, onShow, isShowing, onClose }) {
   const [allCourses, setAllCourses] = useState([...cour]);
   const [allCountries, setAllCountries] = useState([]);
 
   async function getCountries() {
-    const response = await fetch(`https://restcountries.com/v3.1/all`);
-    const results = await response.json();
-    const data = results.map((datum) => datum.name.common);
-    setAllCountries(data.sort());
+    try {
+      const response = await axios.get(`https://restcountries.com/v3.1/all`);
+      const results = response.data;
+      const data = results.map((datum) => datum.name.common);
+      setAllCountries(data.sort());
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   useEffect(() => {
@@ -41,15 +46,21 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
       courses: [],
     },
     onSubmit: (values) => {
-      fetch(`/api/v1/students`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+      const body = {
+        ...values,
+      };
+
+      axios({
+        method: "post",
+        url: "/api/v1/students",
+        data: body,
       })
-        .then((response) => response.json())
-        .then((data) => {
+        .then(() => {
           onClose();
           notify();
+        })
+        .catch((error) => {
+          console.error(error);
         });
     },
   });

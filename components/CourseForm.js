@@ -7,7 +7,7 @@ import Form from "./form";
 import { cour } from "../courses";
 import axios from "axios";
 
-function CourseForm({ onClose, onCourses, data, allCourses }) {
+function CourseForm({ onClose, data, onCourses, allCourses }) {
   const { handleSubmit, register } = useForm();
   const [studentCourses, setStudentCourses] = useState([]);
   const [schoolCourses, setAllSchoolCourses] = useState([...cour]);
@@ -54,9 +54,7 @@ function CourseForm({ onClose, onCourses, data, allCourses }) {
     updateContact(values);
   }
 
-  useEffect(() => {
-    getCourses();
-  }, []);
+  useEffect(() => {}, [studentCourses]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

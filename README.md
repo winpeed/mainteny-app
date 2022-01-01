@@ -22,28 +22,44 @@ With the application, only administrators can make changes to the student data a
    npm install
    ```
 3. For the application to work in your local environment, the following environment variables have to be created in your .env.local file.
- Create a `.env.local` file in the root of your project and insert
-your key/value pairs in the following format of `KEY=VALUE`:
-   
+   Create a `.env.local` file in the root of your project and insert
+   your key/value pairs in the following format of `KEY=VALUE`:
+
 ```js
 MONGODB_URL="YOUR MONGO DATABASE URL"
 MONGODB_DB="YOUR MONGODB DATABASE NAME"
 NEXTAUTH_URL=http://localhost:3000
 ```
+
 If you experience any issues with the MONGODB_URL and MONGODB_BY, you can shoot me an [email.](mailto:praiseobende@yahoo.com?subject=Hi% "Hi!")
 
 4. In the project directory, you can run:
 
 ```js
-"npm run dev"
+"npm run dev";
 ```
 
 to start the development server on http://localhost:3000.
- Open [http://localhost:3000](http://localhost:3000) to view it in the browser. The page will reload if you make edits. You will also see any lint errors in the console.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser. The page will reload if you make edits. You will also see any lint errors in the console.
 
 5. Run
+
 ```js
-"npm run build"
+"npm run build";
+```
+
+#### Docker Compose
+
+```js
+"docker-compose up --build";
+```
+
+This will build and run your container locally 🚀
+
+Now that your container is built, you can test it locally:
+
+```js
+"docker run -p 3000:3000 mainteny-app_mainteny";
 ```
 
 ### Usage
@@ -72,7 +88,6 @@ Password: testing1234
 5. To create a new student, click the" Add Student" button. Fill in the form and click submit. The new student's data is successfully created.
 
 ![add-courses](https://user-images.githubusercontent.com/28057919/147681117-41f9f22c-04c2-4176-923d-87585f2300f5.JPG)
-
 
 #### View Student Biodata
 
