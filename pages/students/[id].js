@@ -1,11 +1,12 @@
 import React from "react";
+import Head from "next/head";
+import { getStudents } from "../api/v1/students";
+import { getOneStudent } from "../api/v1/students/[id]";
+import { useSession } from "next-auth/react";
 import HeaderContainer from "../../containers/HeaderContainer";
 import ProfileContainer from "../../containers/ProfileContainer";
 import HomeContainer from "../../containers/HomeContainer";
 import SideContainer from "../../containers/SideContainer";
-import { getStudents } from "../api/v1/students";
-import { getOneStudent } from "../api/v1/students/[id]";
-import { useSession } from "next-auth/react";
 import Profile from "../../components/profile";
 import Loading from "../../components/Loading";
 
@@ -14,6 +15,10 @@ export default function Student({ data }) {
 
   return (
     <>
+      <Head>
+        <title>{data.name} - Mainteny Uni</title>
+        <meta name="description" content="Student's Data" />
+      </Head>
       <HeaderContainer />
       {status === "loading" || status === "nonauthenticated" ? (
         <>

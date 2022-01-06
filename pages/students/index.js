@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 import HeaderContainer from "../../containers/HeaderContainer";
 import HomeContainer from "../../containers/HomeContainer";
 import StudentContainer from "../../containers/StudentContainer";
@@ -14,6 +15,13 @@ export default function Students({ data }) {
 
   return (
     <>
+      <Head>
+        <title>Students Dashboard - Mainteny Uni</title>
+        <meta
+          name="description"
+          content="Student's Dashboard for Mainteny Uni"
+        />
+      </Head>
       <HeaderContainer />
       {status === "loading" || status === "nonauthenticated" ? (
         <>
