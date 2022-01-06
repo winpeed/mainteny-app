@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Profile from "./profile";
 import { css } from "@emotion/react";
-import { ClipLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 
 function Loading() {
   let [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ function Loading() {
     <Profile>
       {" "}
       <Profile.Wrapper type="home">
-        <ClipLoader color={color} loading={loading} size={85} />
+        <BeatLoader color={color} loading={loading} size={13} />
       </Profile.Wrapper>
     </Profile>
   );
