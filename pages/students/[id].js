@@ -19,17 +19,19 @@ export default function Student({ data }) {
         <title>{data.name} - Mainteny Uni</title>
         <meta name="description" content="Student's Data" />
       </Head>
-      <HeaderContainer />
+      <HeaderContainer status={status} />
       {status === "loading" || status === "nonauthenticated" ? (
         <>
           <HomeContainer />
           <Loading />
         </>
-      ) : (
+      ) : status === "authenticated" ? (
         <Profile type="content">
           <SideContainer />
           <ProfileContainer data={data} status={status} />
         </Profile>
+      ) : (
+        <HomeContainer />
       )}
       )
     </>

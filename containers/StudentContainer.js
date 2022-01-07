@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Profile from "../components/profile";
+import StudentForm from "../components/StudentForm";
+import Loading from "../components/Loading";
 import DataTable from "react-data-table-component";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
-import StudentForm from "../components/StudentForm";
-import { useRouter } from "next/router";
-import Loading from "../components/Loading";
 import axios from "axios";
 
 function StudentContainer({ data, status }) {
@@ -14,7 +14,7 @@ function StudentContainer({ data, status }) {
   const [allStudents, setAllStudents] = useState([]);
   const [isShowing, setIsShowing] = useState(true);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -27,6 +27,7 @@ function StudentContainer({ data, status }) {
     try {
       const response = await axios.get("/api/v1/students");
       setAllStudents(response.data.data);
+      setIsLoading(true);
     } catch (err) {
       console.error(err);
     }
@@ -34,15 +35,7 @@ function StudentContainer({ data, status }) {
 
   useEffect(() => {
     getStudents();
-
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [data, isLoading]);
+  }, [data]);
 
   const columns = [
     {
@@ -125,7 +118,7 @@ function StudentContainer({ data, status }) {
             Add New Student
           </Profile.Button>{" "}
         </Profile.ContentWrap>
-        {isLoading ? (
+        {!isLoading ? (
           <Loading />
         ) : (
           <DataTable

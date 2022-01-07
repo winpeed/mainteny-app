@@ -10,7 +10,7 @@ import SideContainer from "../../containers/SideContainer";
 import Loading from "../../components/Loading";
 import Profile from "../../components/profile";
 
-export default function Students({ data }) {
+export default function Students({ data, user }) {
   const { status } = useSession();
 
   return (
@@ -22,8 +22,8 @@ export default function Students({ data }) {
           content="Student's Dashboard for Mainteny Uni"
         />
       </Head>
-      <HeaderContainer />
-      {status === "loading" || status === "nonauthenticated" ? (
+      <HeaderContainer status={status} />
+      {!user ? (
         <>
           <HomeContainer />
           <Loading />
@@ -42,16 +42,10 @@ export async function getServerSideProps(context) {
   const response = await getStudents();
 
   const data = response.map((respond) => {
-    const { _id, courses, age, gender, name, email, country, updatedAt } =
-      respond;
+    const { _id, updatedAt } = respond;
     return {
-      id: String(_id),
-      courses,
-      age,
-      gender,
-      name,
-      email,
-      country,
+      ...respond,
+      _id: String(_id),
       updatedAt: String(updatedAt),
     };
   });

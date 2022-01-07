@@ -174,6 +174,7 @@ function ProfileContainer(data) {
                   <Profile.Name>Gender</Profile.Name>
                   <Profile.Text>{gender}</Profile.Text>
                 </Profile.Wrapper>
+
                 <Profile.Wrapper>
                   <Profile.Name>Age</Profile.Name>
                   <Profile.Text>{age}</Profile.Text>
