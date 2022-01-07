@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-export default function StudentForm({ data, onShow, isShowing, onClose }) {
+export default function StudentForm({ onShow, isShowing, onClose }) {
   const [allCourses, setAllCourses] = useState([...cour]);
   const [allCountries, setAllCountries] = useState([]);
 
@@ -119,6 +119,8 @@ export default function StudentForm({ data, onShow, isShowing, onClose }) {
           name="age"
           type="number"
           required
+          min="18"
+          max="55"
           onChange={formik.handleChange}
           value={formik.values.age}
         />

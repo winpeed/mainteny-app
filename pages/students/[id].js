@@ -39,46 +39,36 @@ export default function Student({ data }) {
 }
 
 export async function getStaticProps(context) {
-  const response = await getOneStudent(context.params.id);
+  try {
+    const response = await getOneStudent(context.params.id);
 
-  const { courses, age, gender, name, email, country, updatedAt } = response;
-  const data = {
-    _id: String(response._id),
-    courses,
-    age,
-    gender,
-    name,
-    email,
-    country,
-    updatedAt: String(updatedAt),
-  };
-
-  if (!data) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
+    const data = {
+      ...response,
+      _id: String(response._id),
+      updatedAt: String(response.updatedAt),
     };
-  }
 
-  return {
-    props: { data },
-    revalidate: 1,
-  };
+    if (!data) {
+      return {
+        notFound: true,
+      };
+    }
+
+    return {
+      props: { data },
+      revalidate: 1,
+    };
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export async function getStaticPaths(context) {
   const response = await getStudents();
   const data = response.map((respond) => {
     return {
+      ...respond,
       _id: String(respond._id),
-      courses: respond.courses,
-      age: respond.age,
-      gender: respond.gender,
-      name: respond.name,
-      email: respond.email,
-      country: respond.country,
       updatedAt: String(respond.updatedAt),
     };
   });

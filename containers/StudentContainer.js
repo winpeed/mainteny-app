@@ -8,7 +8,7 @@ import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import axios from "axios";
 
-function StudentContainer({ data, status }) {
+function StudentContainer({ status }) {
   const [searchText, setSearchText] = useState("");
 
   const [allStudents, setAllStudents] = useState([]);
@@ -35,7 +35,7 @@ function StudentContainer({ data, status }) {
 
   useEffect(() => {
     getStudents();
-  }, [data]);
+  }, [allStudents]);
 
   const columns = [
     {
@@ -91,7 +91,6 @@ function StudentContainer({ data, status }) {
         aria-describedby="A Form to Add new students to existing courses"
       >
         <StudentForm
-          data={data}
           onShow={() => setIsShowing(!isShowing)}
           isShowing={isShowing}
           onClose={() => {

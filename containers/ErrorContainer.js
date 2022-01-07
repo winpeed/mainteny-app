@@ -13,7 +13,9 @@ export default function ErrorContainer() {
     <Profile>
       <Profile.Wrapper type="home">
         <Profile.ImageWrapper>
-          <Profile.SubTitle>Oops, this page is not available.</Profile.SubTitle>
+          <Profile.SubTitle>
+            Oops, this page is not a valid one.
+          </Profile.SubTitle>
         </Profile.ImageWrapper>
         <Profile.ImageWrapper>
           <Image
