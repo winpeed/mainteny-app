@@ -7,11 +7,12 @@ import DataTable from "react-data-table-component";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import axios from "axios";
+import SideContainer from "./SideContainer";
 
 function StudentContainer({ status }) {
   const [searchText, setSearchText] = useState("");
 
-  const [allStudents, setAllStudents] = useState([]);
+  const [allStudents, setAllStudents] = useState(null);
   const [isShowing, setIsShowing] = useState(true);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +36,7 @@ function StudentContainer({ status }) {
 
   useEffect(() => {
     getStudents();
-  }, [allStudents]);
+  }, []);
 
   const columns = [
     {
@@ -101,52 +102,57 @@ function StudentContainer({ status }) {
         />
       </Modal>
 
-      <Profile.Content>
-        <Profile.ImageWrapper justify="center">
-          <Profile.Input
-            type="text"
-            placeholder="Search for Students"
-            required
-            value={searchText}
-            onChange={({ target }) => setSearchText(target.value)}
-          />
-        </Profile.ImageWrapper>
-        <Profile.ContentWrap>
-          <Profile.SubTitle>Students</Profile.SubTitle>
-          <Profile.Button onClick={onOpenModal} state="success">
-            Add New Student
-          </Profile.Button>{" "}
-        </Profile.ContentWrap>
-        {!isLoading ? (
-          <Loading />
-        ) : (
-          <DataTable
-            columns={columns}
-            data={
-              status === "loading" || status === "nonauthenticated"
-                ? null
-                : allStudents.filter((item) => {
-                    if (searchText === "") {
-                      return item;
-                    } else if (
-                      item.name.toLowerCase().includes(searchText.toLowerCase())
-                    ) {
-                      return item;
-                    }
-                  })
-            }
-            pagination
-            paginationPerPage={10}
-            paginationRowsPerPageOptions={[5, 10, 15, 20, 25]}
-            pointerOnHover={true}
-            highlightOnHover={true}
-            onRowClicked={(state) => {
-              router.push(`/students/${state._id}`);
-            }}
-            noDataComponent={<Loading />}
-          />
-        )}
-      </Profile.Content>
+      <Profile type="content">
+        <SideContainer open={open} />
+        <Profile.Content>
+          <Profile.ImageWrapper justify="center">
+            <Profile.Input
+              type="text"
+              placeholder="Search for Students"
+              required
+              value={searchText}
+              onChange={({ target }) => setSearchText(target.value)}
+            />
+          </Profile.ImageWrapper>
+          <Profile.ContentWrap>
+            <Profile.SubTitle>Students</Profile.SubTitle>
+            <Profile.Button onClick={onOpenModal} state="success">
+              Add New Student
+            </Profile.Button>{" "}
+          </Profile.ContentWrap>
+          {!isLoading ? (
+            <Loading />
+          ) : (
+            <DataTable
+              columns={columns}
+              data={
+                status === "loading" || status === "nonauthenticated"
+                  ? null
+                  : allStudents.filter((item) => {
+                      if (searchText === "") {
+                        return item;
+                      } else if (
+                        item.name
+                          .toLowerCase()
+                          .includes(searchText.toLowerCase())
+                      ) {
+                        return item;
+                      }
+                    })
+              }
+              pagination
+              paginationPerPage={10}
+              paginationRowsPerPageOptions={[5, 10, 15, 20, 25]}
+              pointerOnHover={true}
+              highlightOnHover={true}
+              onRowClicked={(state) => {
+                router.push(`/students/${state._id}`);
+              }}
+              noDataComponent={<Loading />}
+            />
+          )}
+        </Profile.Content>
+      </Profile>
     </>
   );
 }

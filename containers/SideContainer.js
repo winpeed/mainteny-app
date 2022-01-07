@@ -3,11 +3,11 @@ import Profile from "../components/profile";
 import axios from "axios";
 import Loading from "../components/Loading";
 
-function SideContainer() {
-  const [students, setStudents] = useState([]);
+function SideContainer({ open }) {
+  const [students, setStudents] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  async function getStudents() {
+  const getStudents = async () => {
     try {
       const response = await axios.get("/api/v1/students");
       setStudents(response.data.data);
@@ -15,11 +15,12 @@ function SideContainer() {
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   useEffect(() => {
     getStudents();
-  }, [isLoading, students]);
+  }, [open]);
+
   return (
     <Profile.Content type="left">
       {isLoading ? (

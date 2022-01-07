@@ -28,10 +28,7 @@ export default function Students({ user }) {
           <Loading />
         </>
       ) : (
-        <Profile type="content">
-          <SideContainer />
-          <StudentContainer status={status} />
-        </Profile>
+        <StudentContainer status={status} />
       )}
     </>
   );

@@ -5,10 +5,13 @@ import { cour } from "../courses";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function StudentForm({ onShow, isShowing, onClose }) {
   const [allCourses, setAllCourses] = useState([...cour]);
   const [allCountries, setAllCountries] = useState([]);
+
+  const router = useRouter();
 
   async function getCountries() {
     try {
