@@ -48,18 +48,14 @@ export async function getStaticProps(context) {
       updatedAt: String(response.updatedAt),
     };
 
-    if (!data) {
-      return {
-        notFound: true,
-      };
-    }
-
     return {
       props: { data },
       revalidate: 1,
     };
   } catch (error) {
-    console.error(error);
+    return {
+      notFound: true,
+    };
   }
 }
 
