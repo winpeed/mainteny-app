@@ -1,6 +1,6 @@
 # Mainteny-Uni
 
-Mainteny Uni is an application for the administrators of the University to manage courses offered by students.
+Mainteny Uni is an application created by Praise Obende for the administrators of a University to manage courses offered by students.
 
 ### Project Description
 
