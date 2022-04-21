@@ -81,6 +81,9 @@ function SignInContainer({ csrfToken }) {
               id="input-password-for-credentials-provider"
               required
             />
+            <Link href="https://github.com/winpeed/mainteny-app/blob/main/README.md">
+              Get Login Details Here
+            </Link>
             <Sign.ButtonInput type="submit">Login</Sign.ButtonInput>
             <Sign.Wrapper style={{ flexDirection: "row" }}>
               <Sign.Text>Not an admin yet?</Sign.Text>
