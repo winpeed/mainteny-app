@@ -81,8 +81,11 @@ function SignInContainer({ csrfToken }) {
               id="input-password-for-credentials-provider"
               required
             />
-            <Link href="https://github.com/winpeed/mainteny-app/blob/main/README.md">
-              Get Login Details Here
+            <Link
+              href="https://github.com/winpeed/mainteny-app/blob/main/README.md"
+              passHref
+            >
+              <Sign.Link target="_blank">Get Login Details Here</Sign.Link>
             </Link>
             <Sign.ButtonInput type="submit">Login</Sign.ButtonInput>
             <Sign.Wrapper style={{ flexDirection: "row" }}>
